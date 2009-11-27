@@ -1,0 +1,18 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+	<file>addFaust.png</file>
+	<file>addFromFileFaust.png</file>
+	<file>removeFaust.png</file>
+    <file>FaustCommands.xml</file>
+    <file>seq1.png</file>
+    <file>seq2.png</file>
+    <file>par1.png</file>
+    <file>par2.png</file>
+    <file>split1.png</file>
+    <file>split2.png</file>
+    <file>merge1.png</file>
+    <file>merge2.png</file>
+    <file>rec1.png</file>
+    <file>rec2.png</file>
+</qresource> 
+</RCC>

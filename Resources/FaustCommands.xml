@@ -1,0 +1,70 @@
+<!DOCTYPE LanguageCommandsLibrary>
+<LanguageCommandsLibraryRoot>
+	<LanguageCommandsCategory name="Primitives">
+		<LanguageCommandsCategory name="Arithmetics">
+			<LanguageCommand name="+">		<![CDATA[+]]></LanguageCommand>
+			<LanguageCommand name="-">		<![CDATA[-]]></LanguageCommand>
+			<LanguageCommand name="*">		<![CDATA[*]]></LanguageCommand>
+			<LanguageCommand name="/">		<![CDATA[/]]></LanguageCommand>
+			<LanguageCommand name="%">		<![CDATA[%]]></LanguageCommand>
+			<LanguageCommand name="int">		<![CDATA[int]]></LanguageCommand>
+			<LanguageCommand name="float">		<![CDATA[float]]></LanguageCommand>
+		</LanguageCommandsCategory>
+		<LanguageCommandsCategory name="Comparisons">
+			<LanguageCommand name="&lt;">		<![CDATA[<]]></LanguageCommand>
+			<LanguageCommand name="&lt;=">		<![CDATA[<=]]></LanguageCommand>
+			<LanguageCommand name="&gt;">		<![CDATA[>]]></LanguageCommand>
+			<LanguageCommand name="&gt;=">		<![CDATA[>=]]></LanguageCommand>
+			<LanguageCommand name="==">		<![CDATA[==]]></LanguageCommand>
+			<LanguageCommand name="!=">		<![CDATA[!=]]></LanguageCommand>
+		</LanguageCommandsCategory>
+		<LanguageCommandsCategory name="Bits-Booleans">
+			<LanguageCommand name="&amp;">		<![CDATA[&]]></LanguageCommand>
+			<LanguageCommand name="^">		<![CDATA[^]]></LanguageCommand>
+			<LanguageCommand name="|">		<![CDATA[|]]></LanguageCommand>
+			<LanguageCommand name="&lt;&lt;">	<![CDATA[<<]]></LanguageCommand>
+			<LanguageCommand name="&gt;&gt;">	<![CDATA[>>]]></LanguageCommand>
+		</LanguageCommandsCategory>
+		<LanguageCommandsCategory name="Math">
+			<LanguageCommand name="acos">		<![CDATA[acos]]></LanguageCommand>
+			<LanguageCommand name="asin">		<![CDATA[asin]]></LanguageCommand>
+			<LanguageCommand name="atan">		<![CDATA[atan]]></LanguageCommand>
+			<LanguageCommand name="atan2">		<![CDATA[atan2]]></LanguageCommand>
+			<LanguageCommand name="cos">		<![CDATA[cos]]></LanguageCommand>
+			<LanguageCommand name="sin">		<![CDATA[sin]]></LanguageCommand>
+			<LanguageCommand name="tan">		<![CDATA[tan]]></LanguageCommand>
+			<LanguageCommand name="exp">		<![CDATA[exp]]></LanguageCommand>
+			<LanguageCommand name="log">		<![CDATA[log]]></LanguageCommand>
+			<LanguageCommand name="log10">		<![CDATA[log10]]></LanguageCommand>
+			<LanguageCommand name="pow">		<![CDATA[pow]]></LanguageCommand>
+			<LanguageCommand name="abs">		<![CDATA[abs]]></LanguageCommand>
+			<LanguageCommand name="min">		<![CDATA[min]]></LanguageCommand>
+			<LanguageCommand name="max">		<![CDATA[max]]></LanguageCommand>
+			<LanguageCommand name="fmod">		<![CDATA[fmod]]></LanguageCommand>
+			<LanguageCommand name="remainder">	<![CDATA[remainder]]></LanguageCommand>
+			<LanguageCommand name="floor">		<![CDATA[floor]]></LanguageCommand>
+			<LanguageCommand name="ceil">		<![CDATA[ceil]]></LanguageCommand>
+			<LanguageCommand name="rint">		<![CDATA[rint]]></LanguageCommand>
+		</LanguageCommandsCategory>
+		<LanguageCommandsCategory name="Delay-Tables">
+			<LanguageCommand name="@">			<![CDATA[@]]></LanguageCommand>
+			<LanguageCommand name="mem">			<![CDATA[mem]]></LanguageCommand>
+			<LanguageCommand name="read table">		<![CDATA[rdtable]]></LanguageCommand>
+			<LanguageCommand name="read write table">	<![CDATA[rwtable]]></LanguageCommand>
+			<LanguageCommand name="select2">		<![CDATA[select2]]></LanguageCommand>
+			<LanguageCommand name="select3">		<![CDATA[select3]]></LanguageCommand>
+		</LanguageCommandsCategory>
+		<LanguageCommandsCategory name="User Interface">
+			<LanguageCommand name="button">					<![CDATA[button("foo")]]></LanguageCommand>
+			<LanguageCommand name="checkbox">				<![CDATA[checkbox("foo")]]></LanguageCommand>
+			<LanguageCommand name="vertical slider">			<![CDATA[vslider("foo", 60, 0, 127, 0.1)]]></LanguageCommand>
+			<LanguageCommand name="horizontal slider">			<![CDATA[hslider("foo", 60, 0, 127, 0.1)]]></LanguageCommand>
+			<LanguageCommand name="numerical entry">			<![CDATA[nentry("foo", 60, 0, 127, 0.1)]]></LanguageCommand>
+			<LanguageCommand name="vertical group"	 insertIndex="-1">	<![CDATA[vgroup("foo",)]]></LanguageCommand>
+			<LanguageCommand name="horizontal group" insertIndex="-1">	<![CDATA[hgroup("foo",)]]></LanguageCommand>
+			<LanguageCommand name="tab group" insertIndex="-1">		<![CDATA[tgroup("foo",)]]></LanguageCommand>
+			<LanguageCommand name="vertical bargraph">			<![CDATA[vbargraph("foo", 0, 127)]]></LanguageCommand>
+			<LanguageCommand name="horizontal bargraph">			<![CDATA[hbargraph("foo", 0, 127)]]></LanguageCommand>
+		</LanguageCommandsCategory>
+	</LanguageCommandsCategory>
+</LanguageCommandsLibraryRoot>

@@ -7,6 +7,7 @@ TARGET =
 DEPENDPATH += . Forms Resources
 INCLUDEPATH += .
 QT += xml svg
+RC_FILE = Resources/FaustWorks.rc
 # Input
 HEADERS += CPPHighlighter.h \
            FaustHighlighter.h \
@@ -46,3 +47,4 @@ SOURCES += CPPHighlighter.cpp \
            QPaletteItem.cpp \
            QResolutionDialog.cpp
 RESOURCES += Resources/application.qrc Resources/faust.qrc
+OTHER_FILES += Resources/FaustWorks.rc

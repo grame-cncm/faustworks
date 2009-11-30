@@ -8,6 +8,7 @@ DEPENDPATH += . Forms Resources
 INCLUDEPATH += .
 QT += xml svg
 RC_FILE = Resources/FaustWorks.rc
+ICON = Resources/FaustWorks.icns
 # Input
 HEADERS += CPPHighlighter.h \
            FaustHighlighter.h \

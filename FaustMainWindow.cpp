@@ -46,7 +46,7 @@
 #if defined WIN32
 	#define DEFAULT_FAUST_PATH		"faust.exe"
     #define SCRIPTS_FOLDER          "scripts.win/"
-#elif defined DARWIN
+#elif defined __APPLE__
     #define DEFAULT_FAUST_PATH		"/usr/local/bin/faust"
     #define SCRIPTS_FOLDER          "scripts.osx/"
 #elif defined linux

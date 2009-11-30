@@ -373,12 +373,27 @@ void QFaustItem::runBinary()
 //------------------------------------------------------------
 void QFaustItem::exploreSVG ()
 {
-	QString cmd = QString(SVG_BROWSER) + " \"file://" + QFileInfo(svgRootFile()).filePath() + "\"" ;
-	qDebug() << "QFaustItem::exploreSVG : " << cmd;
-	bool b = QProcess::startDetached ( cmd );
-	if (!b) {
-		qDebug() << "ERROR : Can't start the SVG Browser " ;
-	}
+        QString cmd = QString(SVG_BROWSER) + " \"file://" + QFileInfo(svgRootFile()).filePath() + "\"" ;
+        qDebug() << "QFaustItem::exploreSVG : " << cmd;
+        bool b = QProcess::startDetached ( cmd );
+        if (!b) {
+                qDebug() << "ERROR : Can't start the SVG Browser " ;
+        }
+}
+
+/**
+ * Explore the SVG block-diagram using a browser
+ */
+//------------------------------------------------------------
+void QFaustItem::generateMath ()
+{
+    QString cmd =  "faust2math " + dspFileQuoted();
+    bool b = QProcess::startDetached(cmd);
+    qDebug() << cmd;
+    if (!b) {
+            qDebug() << "ERROR : Can't generate math doc " ;
+    }
+
 }
 
 //------------------------------------------------------------
@@ -747,7 +762,9 @@ void QFaustItem::centerSVGItem()
 //------------------------------------------------------------
 QString QFaustItem::svgFolder() const
 {
-	return mWorkingDirectory + "/" + tempName() + SVG_FOLDER_EXT;
+        QString p = mWorkingDirectory + "/" + tempName() + SVG_FOLDER_EXT;
+        qDebug() << "QFaustItem::svgFolder()" << p;
+        return p;
 }
 
 //------------------------------------------------------------
@@ -777,8 +794,8 @@ QString QFaustItem::cppFileQuoted() const
 //------------------------------------------------------------
 QString QFaustItem::dspFile() const
 {
-//	return mWorkingDirectory + "/" + tempName() + FAUST_FILE_EXT;
-	return mWorkingDirectory + "/" + tempName();
+        return mWorkingDirectory + "/" + tempName() + DSP_EXT;
+//	return mWorkingDirectory + "/" + tempName();
 }
 
 //------------------------------------------------------------
@@ -967,7 +984,7 @@ void QFaustItem::updateName()
 	QString exIdString = mIdString;
 
 	mIdString = itemName() + "." + QVariant( mItemId ).toString();
-	mTempName = mIdString + ".tmp" + DSP_EXT;
+        mTempName = mIdString + ".tmp" /* + DSP_EXT*/;
 	
 	if ( !QDir( PREFIX + mIdString ).exists() )
 		QDir().mkdir( PREFIX + mIdString );
@@ -1130,6 +1147,7 @@ QMenu* QFaustItem::buildContextMenu()
     m->addAction( "Save", this , SLOT(saveItem()) );
     m->addAction( "Save as...", this , SIGNAL(saveItemAs()) );
     m->addAction( "Browse Diagram", this , SLOT(exploreSVG()) );
+    m->addAction( "Generate Math", this , SLOT(generateMath()) );
     m->addAction( "Run Binary",     this , SLOT(runBinary()) );
 
     return m;

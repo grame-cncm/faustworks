@@ -85,6 +85,8 @@ class QFaustItem : public QLanguageItem
     public Q_SLOTS:
         void runBinary();       // run the binary code of the item
         void exploreSVG ();     // run an external brwoser to explore the SVG block-diagram
+        void generateMath ();
+
 
 		void resized( const QRectF& newRect );
 

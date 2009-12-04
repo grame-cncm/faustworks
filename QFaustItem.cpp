@@ -387,7 +387,7 @@ void QFaustItem::exploreSVG ()
 //------------------------------------------------------------
 void QFaustItem::generateMath ()
 {
-    QString cmd =  "faust2math " + dspFileQuoted();
+    QString cmd =  "faust2mathdoc " + dspFileQuoted();
     bool b = QProcess::startDetached(cmd);
     qDebug() << cmd;
     if (!b) {

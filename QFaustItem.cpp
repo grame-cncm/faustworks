@@ -43,6 +43,8 @@
 #include <QImage>
 #include <QPainter>
 #include <QString>
+#include <QDesktopServices>
+#include <QUrl>
 
 #include "QPaletteItem.h"
 
@@ -69,6 +71,26 @@
 #define MIME_FAUST_ITEM_RECT_HEIGHT "MimeFaustItemRectHeight"
 #define DOM_FAUST_ITEM_RECT_WIDTH	"DomFaustItemRectWidth"
 #define DOM_FAUST_ITEM_RECT_HEIGHT	"DomFaustItemRectHeight"
+
+
+
+/**
+ * Open a file on the user's desktop using the appropriate application. The filename
+ * don't have to be quoted as quotes are automatically added. The function returns
+ * true in case of success and false otherwise
+ */
+bool desktopOpen (const QString& filename)
+{
+#if defined __linux__
+    QString cmd = "xdg-open \"" + filename + "\"" ;
+#elif defined __APPLE__
+    QString cmd = "open \"" + filename + "\"" ;
+#elif defined WIN32
+    QString cmd = "start \"" + filename + "\"" ;
+#endif
+    return QProcess::startDetached ( cmd );
+}
+
 
 static void removeFolder( const QString& folderName );
 
@@ -368,18 +390,38 @@ void QFaustItem::runBinary()
 }
 
 /**
- * Explore the SVG block-diagram using a browser
+ * Explore the SVG block-diagram using the appropriate desktop browser
  */
+void QFaustItem::exploreSVG ()
+{
+    QString filename = QFileInfo(svgRootFile()).absoluteFilePath();
+    QUrl url = QUrl::fromLocalFile(filename);
+    bool b = QDesktopServices::openUrl(url);
+    if (!b) {
+       qDebug() << "ERROR : Can't open the SVG URL " << url ;
+    }
+}
+
+#if 0
 //------------------------------------------------------------
 void QFaustItem::exploreSVG ()
 {
-        QString cmd = QString(SVG_BROWSER) + " \"file://" + QFileInfo(svgRootFile()).filePath() + "\"" ;
-        qDebug() << "QFaustItem::exploreSVG : " << cmd;
-        bool b = QProcess::startDetached ( cmd );
-        if (!b) {
-                qDebug() << "ERROR : Can't start the SVG Browser " ;
-        }
+    //QString cmd = QString(SVG_BROWSER) + " \"file://" + QFileInfo(svgRootFile()).filePath() + "\"" ;
+    // the idea here is to use the default application of the system to browse the svg diagrams
+#if defined __linux__
+    QString cmd = "xdg-open \"" + QFileInfo(svgRootFile()).filePath() + "\"" ;
+#elif defined __APPLE__
+    QString cmd = "open \"" + QFileInfo(svgRootFile()).filePath() + "\"" ;
+#elif defined WIN32
+    QString cmd = "start \"" + QFileInfo(svgRootFile()).filePath() + "\"" ;
+#endif
+    qDebug() << "QFaustItem::exploreSVG : " << cmd;
+    bool b = QProcess::startDetached ( cmd );
+    if (!b) {
+            qDebug() << "ERROR : Can't start the SVG Browser " ;
+    }
 }
+#endif
 
 /**
  * Explore the SVG block-diagram using a browser
@@ -387,7 +429,7 @@ void QFaustItem::exploreSVG ()
 //------------------------------------------------------------
 void QFaustItem::generateMath ()
 {
-    QString cmd =  "faust2mathdoc " + dspFileQuoted();
+    QString cmd =  "faust2mathviewer " + dspFileQuoted();
     bool b = QProcess::startDetached(cmd);
     qDebug() << cmd;
     if (!b) {
@@ -531,6 +573,8 @@ bool QFaustItem::generateBinary()
 	connect( mBuildProcess , SIGNAL( finished ( int , QProcess::ExitStatus ) ) , this , SLOT( buildFinished ( int , QProcess::ExitStatus ) ) );
 
 	mItemBuildCommand = interpretCommand( mBuildCommand );
+
+    qDebug() << "mItemBuildCommand = " << mItemBuildCommand;
 	
 	mBuildProcess->start( mItemBuildCommand );
 
@@ -776,7 +820,8 @@ QString QFaustItem::svgRootFile() const
 //------------------------------------------------------------
 QString QFaustItem::svgRootFileQuoted() const
 {
-	return "\"" + svgRootFile() + "\"";
+    QString p = "\"" + svgRootFile() + "\"";
+    return p;
 }
 
 //------------------------------------------------------------
@@ -1050,7 +1095,7 @@ QString QFaustItem::interpretCommand(const QString& command) const
 {
 	QString result = command;
 
-	result.replace( DSP_FILE_KEYWORD ,	file() );
+    result.replace( DSP_FILE_KEYWORD ,	"\""+file()+"\"" );
 	result.replace( OPTIONS_KEYWORD , QFaustItem::mBuildOptions );
 	QFileInfo fileInfo( file() );
 	QString f = file().length() ? fileInfo.absolutePath() + fileInfo.completeBaseName() : "untitled";

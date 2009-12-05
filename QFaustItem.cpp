@@ -17,12 +17,6 @@
  * WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#ifdef WIN32
-	#define SVG_BROWSER				"\"C:\\Program Files\\Mozilla Firefox\\firefox.exe\""
-#else
-	#define SVG_BROWSER				"firefox"
-#endif
-
 
 #include "QFaustItem.h"
 
@@ -71,25 +65,6 @@
 #define MIME_FAUST_ITEM_RECT_HEIGHT "MimeFaustItemRectHeight"
 #define DOM_FAUST_ITEM_RECT_WIDTH	"DomFaustItemRectWidth"
 #define DOM_FAUST_ITEM_RECT_HEIGHT	"DomFaustItemRectHeight"
-
-
-
-/**
- * Open a file on the user's desktop using the appropriate application. The filename
- * don't have to be quoted as quotes are automatically added. The function returns
- * true in case of success and false otherwise
- */
-bool desktopOpen (const QString& filename)
-{
-#if defined __linux__
-    QString cmd = "xdg-open \"" + filename + "\"" ;
-#elif defined __APPLE__
-    QString cmd = "open \"" + filename + "\"" ;
-#elif defined WIN32
-    QString cmd = "start \"" + filename + "\"" ;
-#endif
-    return QProcess::startDetached ( cmd );
-}
 
 
 static void removeFolder( const QString& folderName );
@@ -390,8 +365,9 @@ void QFaustItem::runBinary()
 }
 
 /**
- * Explore the SVG block-diagram using the appropriate desktop browser
+ * Explore the SVG block-diagram using the appropriate desktop application
  */
+
 void QFaustItem::exploreSVG ()
 {
     QString filename = QFileInfo(svgRootFile()).absoluteFilePath();
@@ -402,31 +378,11 @@ void QFaustItem::exploreSVG ()
     }
 }
 
-#if 0
-//------------------------------------------------------------
-void QFaustItem::exploreSVG ()
-{
-    //QString cmd = QString(SVG_BROWSER) + " \"file://" + QFileInfo(svgRootFile()).filePath() + "\"" ;
-    // the idea here is to use the default application of the system to browse the svg diagrams
-#if defined __linux__
-    QString cmd = "xdg-open \"" + QFileInfo(svgRootFile()).filePath() + "\"" ;
-#elif defined __APPLE__
-    QString cmd = "open \"" + QFileInfo(svgRootFile()).filePath() + "\"" ;
-#elif defined WIN32
-    QString cmd = "start \"" + QFileInfo(svgRootFile()).filePath() + "\"" ;
-#endif
-    qDebug() << "QFaustItem::exploreSVG : " << cmd;
-    bool b = QProcess::startDetached ( cmd );
-    if (!b) {
-            qDebug() << "ERROR : Can't start the SVG Browser " ;
-    }
-}
-#endif
+
 
 /**
- * Explore the SVG block-diagram using a browser
+ * Call external script to generate and view mathematical documentation
  */
-//------------------------------------------------------------
 void QFaustItem::generateMath ()
 {
     QString cmd =  "faust2mathviewer " + dspFileQuoted();

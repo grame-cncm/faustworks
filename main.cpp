@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 	Q_INIT_RESOURCE( application );
 
 	QCoreApplication::setOrganizationName( "GRAME" );
-	QCoreApplication::setApplicationName( "FaustGIDE" );
+    QCoreApplication::setApplicationName( "FaustWorks" );
 
 	GraphicsSceneMainWindowSettings s;
 	s.mLanguageNameShort = "Faust";

@@ -57,7 +57,7 @@
 #define CURRENT_TARGET_ARCHITECTURE_SETTING		"CurrentTargetArchitecture"
 #define CURRENT_BUILD_OPTION_SETTING			"CurrentBuildOption"
 #define COMPANY_NAME		"GRAME"
-#define APP_NAME			"FaustGIDE"
+#define APP_NAME			"FaustWorks"
 
 #define PALETTE_ID          1
 #define TAB_SPACE 4

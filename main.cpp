@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 
 	Q_INIT_RESOURCE( application );
+    app.setWindowIcon(QIcon(":/FaustWorks.png"));
 
 	QCoreApplication::setOrganizationName( "GRAME" );
     QCoreApplication::setApplicationName( "FaustWorks" );

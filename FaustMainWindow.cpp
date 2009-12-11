@@ -45,13 +45,16 @@
 
 #if defined WIN32
 	#define DEFAULT_FAUST_PATH		"faust.exe"
-    #define SCRIPTS_FOLDER          "scripts.win/"
+    #define SCRIPTS_FOLDER          "scripts.win"
+    #define DIR_SEP                 "\\"
 #elif defined __APPLE__
     #define DEFAULT_FAUST_PATH		"/usr/local/bin/faust"
-    #define SCRIPTS_FOLDER          "scripts.osx/"
+    #define SCRIPTS_FOLDER          "scripts.osx"
+    #define DIR_SEP                 "/"
 #elif defined linux
-    #define DEFAULT_FAUST_PATH		"/usr/local/bin/faust"
-    #define SCRIPTS_FOLDER          "scripts.lin/"
+    #define DEFAULT_FAUST_PATH		"faust"
+    #define SCRIPTS_FOLDER          "scripts.lin"
+    #define DIR_SEP                 "/"
 #endif
 
 #define CURRENT_TARGET_ARCHITECTURE_SETTING		"CurrentTargetArchitecture"
@@ -138,9 +141,10 @@ void FaustMainWindow::reinitSettings()
 void FaustMainWindow::reinitPreferencesSettings()
 {
     QSettings   settings;
-    QDir        scriptsDir(SCRIPTS_FOLDER);
+    QDir        scriptsDir(QCoreApplication::applicationDirPath()+"/"+SCRIPTS_FOLDER);
     QStringList scriptsList = scriptsDir.entryList(QDir::Files, QDir::Name);
 
+    qDebug() << "LIST OF SCRIPTS : ";
     for (int i=0; i<scriptsList.size(); i++) {
         qDebug() << "script " << i << " = " << scriptsList.at(i);
     }
@@ -152,10 +156,12 @@ void FaustMainWindow::reinitPreferencesSettings()
 	// ----- Target configurations
 	settings.remove( TARGETS_SETTING );
 	settings.beginGroup(TARGETS_SETTING);
-        // Fill the configuration with existing script files in the scripts folder
-        for (int i=0; i<scriptsList.size(); i++) {
-            settings.setValue( scriptsList.at(i) ,		SCRIPTS_FOLDER + scriptsList.at(i) + " $DSP $OPTIONS" );
-        }
+
+    //	----- Fill the configuration with existing script files in the scripts folder
+    for (int i=0; i<scriptsList.size(); i++) {
+        settings.setValue( scriptsList.at(i), QCoreApplication::applicationDirPath()
+                            + DIR_SEP + SCRIPTS_FOLDER + DIR_SEP + scriptsList.at(i) + " $DSP $OPTIONS" );
+    }
 	settings.endGroup();
 
 	// ----- Build optins

@@ -140,7 +140,7 @@ void GraphicsSceneMainWindow::init()
 	mGraphicsScene = 0;
 	mBackgroundItem = 0;
 	reinitScene( START_SCENE_RECT );
-	mGraphicsView->setBackgroundRole(QPalette::Dark);
+//	mGraphicsView->setBackgroundRole(QPalette::Dark);
 //	mGraphicsView->setResizeAnchor(QGraphicsView::NoAnchor);
 //	mGraphicsView->setAlignment( 0 );
 
@@ -462,7 +462,13 @@ void GraphicsSceneMainWindow::sceneSelectionChanged()
 	statusBar()->showMessage( statusMsg );
 	updateWindowState();
 }
+
+
 //-------------------------------------------------------------------------
+/**
+  * Control the scene is large enough to contain all the language
+  * items
+  */
 void GraphicsSceneMainWindow::sceneChanged( const QList<QRectF> &)
 {
 	updateItemPositionControls();

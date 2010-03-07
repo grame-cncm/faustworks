@@ -74,9 +74,13 @@ using namespace std;
 #define FULL_TAGS_WEIGHT	QFont::Bold
 */
 
-#define COMMENTS_FONT		GREEN_4
-#define COMMENTS_BACK		TRANSPARENT
-#define COMMENTS_WEIGHT		QFont::Normal
+#define COMMENTS_FONT       	GREEN_4
+#define COMMENTS_BACK       	TRANSPARENT
+#define COMMENTS_WEIGHT     	QFont::Normal
+
+#define MDOC_FONT               Qt::blue
+#define MDOC_BACK               TRANSPARENT
+#define MDOC_WEIGHT             QFont::Normal
 
 #define QUOTED_STRING_FONT		Qt::red
 #define QUOTED_STRING_BACK		TRANSPARENT
@@ -84,7 +88,7 @@ using namespace std;
 
 #define NUMBER_FONT				Qt::blue
 #define NUMBER_BACK				TRANSPARENT
-#define NUMBER_WEIGHT			QFont::DemiBold
+#define NUMBER_WEIGHT			QFont::Normal
 
 #define FAUST_COMBINATOR_FONT	Qt::red
 #define FAUST_COMBINATOR_BACK	TRANSPARENT
@@ -100,7 +104,7 @@ using namespace std;
 
 #define VARIABLES_FONT			Qt::black
 #define VARIABLES_BACK			TRANSPARENT
-#define VARIABLES_WEIGHT		QFont::Bold
+#define VARIABLES_WEIGHT		QFont::Normal
 
 #define OPERATORS1 "\\b(component|library|environment|mem|prefix|int|float|rdtable|rwtable|select2|select3|ffunction|fconstant|fvariable|button|checkbox|vslider|hslider|nentry|vbargraph|hbargraph|attach|acos|asin|atan|atan2|cos|sin|tan|exp|log|log10|pow|sqrt|abs|min|max|fmod|remainder|floor|ceil|rint)\\b"
 #define OPERATORS2 "\\b(process|with|case|seq|par|sum|prod|import|vgroup|hgroup|tgroup|declare)\\b"
@@ -161,8 +165,15 @@ FaustHighlighter::FaustHighlighter(QTextDocument *parent)
 	commentsPatterns <<"//.*";
 	appendLineRule(commentsPatterns, buildTextCharFormat( COMMENTS_FONT,COMMENTS_BACK,COMMENTS_WEIGHT ),false);
 
-	QString startCommentsPatterns("/\\*");
-	QString endCommentsPatterns("\\*/");
-	appendMultilineRule(startCommentsPatterns,endCommentsPatterns,
-			buildTextCharFormat( COMMENTS_FONT,COMMENTS_BACK,COMMENTS_WEIGHT ),true);
+    QString startCommentsPatterns("/\\*");
+    QString endCommentsPatterns("\\*/");
+    appendMultilineRule(startCommentsPatterns,endCommentsPatterns,
+            buildTextCharFormat( COMMENTS_FONT,COMMENTS_BACK,COMMENTS_WEIGHT ),true);
+
+    QString startMDocPatterns("<mdoc>");
+    QString endMDocPatterns("</mdoc>");
+    appendMultilineRule(startMDocPatterns,endMDocPatterns,
+            buildTextCharFormat( MDOC_FONT,MDOC_BACK,MDOC_WEIGHT ),true);
+
+
 }

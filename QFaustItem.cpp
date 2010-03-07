@@ -668,7 +668,10 @@ float QFaustItem::currentScale() const
 	return mSVGItem->transform().m11();
 }
 
-//------------------------------------------------------------
+/**
+ * Fonction called at the end of the build process that checks if all the resulting files
+ * have been properly created.
+ */
 void QFaustItem::buildFinished ( int exitCode, QProcess::ExitStatus exitStatus )
 {
 //	qDebug() << "QFaustItem::buildFinished";
@@ -680,18 +683,49 @@ void QFaustItem::buildFinished ( int exitCode, QProcess::ExitStatus exitStatus )
 			
 			mIsBinaryReady = true;
 			mBuildAnimationItem->done();
-            QString stdOut =  mBuildProcess->readAllStandardOutput();
 
-			stdOut = stdOut.split( QChar::ParagraphSeparator ).last();
-			stdOut = stdOut.split( QChar::LineSeparator ).last();
 
-			while ( ( stdOut.length() > 0 ) && ( stdOut.at( stdOut.length() - 1 ).isSpace() ) )
-			{
-				stdOut = stdOut.remove( stdOut.length() - 1 , 1 );
-			}
+            //----- list files names
+            {
+                mBinaryFiles = QStringList();
+                QString s =  mBuildProcess->readAllStandardOutput();
+                int     n = s.length();
+                QString f;          //filename under construction
+                int     i = 0;      // current position
+                int     state = 0;  // state of the state-machine
 
-			mBinaryFiles = stdOut.split( ";" , QString::SkipEmptyParts );
-			
+                while(i<n) {
+                    switch (state) {
+                    case 0 :
+                        if (s[i].isSpace() || (s[i] == ';')) {
+                            // skip leading spaces and empty fields
+                            i++; break;
+                        } else {
+                            // begin of a file name
+                            f = s[i];
+                            state = 1;
+                            i++; break;
+                        }
+                    case 1 :
+                        if (s[i] != ';') {
+                            // the filename continues
+                            f += s[i];
+                            i++; break;
+                        } else {
+                            mBinaryFiles << f;
+                            state = 0;
+                            i++; break;
+                        }
+
+                    }
+                }
+
+                // handle case of a last filename without ';' at the end
+                if (state==1) mBinaryFiles << f;
+
+            }
+
+
 			if ( mBinaryFiles.size() == 0 )
 			{
 //				qDebug() << "QFaustItem::buildFinished : no file";
@@ -699,12 +733,12 @@ void QFaustItem::buildFinished ( int exitCode, QProcess::ExitStatus exitStatus )
 			}
 			else
 			{
-//				qDebug() << "QFaustItem::buildFinished : check files";
+                qDebug() << "QFaustItem::buildFinished : check files";
 				QString missingFiles;
 				QString sep = "";
 				for ( int i = 0 ; i < mBinaryFiles.size() ; i++ )
 				{
-//					qDebug() << "QFaustItem::buildFinished : checking " << mBinaryFiles[i] <<"...";
+                    qDebug() << "QFaustItem::buildFinished : checking " << mBinaryFiles[i] <<"...";
 					if ( !QFile::exists( mBinaryFiles[i] ) && !QDir(mBinaryFiles[i]).exists() )
 					{
 						missingFiles += ( sep + mBinaryFiles[i] );

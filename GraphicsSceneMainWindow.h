@@ -88,7 +88,7 @@ class QItemResizer;
 
 #define DEFAULT_MIN_ZOOM	0.1f
 #define DEFAULT_MAX_ZOOM	10.0f
-#define DEFAULT_ZOOM_FACTOR	1.5f
+#define DEFAULT_ZOOM_FACTOR	1.0f
 
 enum UIElementId {
 			EXIT_ACT = 0,

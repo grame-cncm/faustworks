@@ -167,10 +167,11 @@ void FaustMainWindow::reinitPreferencesSettings()
 	// ----- Build optins
 	settings.remove( OPTIONS_SETTING );
 	settings.beginGroup( OPTIONS_SETTING );
-	settings.setValue( NO_OPTIONS ,	"" );
-        settings.setValue( "Vectorial" ,	"-icc -vec" );
-        settings.setValue( "Open MP" ,		"-icc -omp" );
-	settings.endGroup();
+    settings.setValue( "Scalar" ,	"" );
+    settings.setValue( "Vectorial" , "-vec -vs 64" );
+    settings.setValue( "Parallel (OpenMP)", "-omp -vs 512" );
+    settings.setValue( "Parallel (WS)", "-sch -vs 512" );
+    settings.endGroup();
 }
 
 //-------------------------------------------------------------------------

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=false
+Exec=/home/orlarey/work/dev/FAUST/FaustWorks/FaustWorks
+Name=FaustWorks
+Comment=An IDE for DSP programming with Faust
+Icon=Grame-FaustWorks
+

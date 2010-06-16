@@ -973,6 +973,9 @@ void GraphicsSceneMainWindow::fileChanged(bool isFileRemoved)
 	}
 	else
 	{
+        languageItem->reloadItem();
+        updateWindowState();
+#if 0
 		unselectAll();
 		languageItem->setSelected( true );
 		
@@ -986,6 +989,7 @@ void GraphicsSceneMainWindow::fileChanged(bool isFileRemoved)
 			languageItem->reloadItem();
 			updateWindowState();
 		}
+#endif
 	}
 }
 

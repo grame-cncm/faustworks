@@ -39,6 +39,8 @@
 #include <QString>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QTextEdit>
+
 
 #include "QPaletteItem.h"
 
@@ -66,6 +68,7 @@
 #define DOM_FAUST_ITEM_RECT_WIDTH	"DomFaustItemRectWidth"
 #define DOM_FAUST_ITEM_RECT_HEIGHT	"DomFaustItemRectHeight"
 
+static QTextEdit* gErrorWindow = 0;
 
 static void removeFolder( const QString& folderName );
 
@@ -407,6 +410,22 @@ void QFaustItem::generateMath ()
 
 }
 
+
+
+/**
+ * Call external script to generate and view internal DAG
+ */
+void QFaustItem::generateGraph ()
+{
+    QString cmd =  "faust2graphviewer " + dspFileQuoted();
+    bool b = QProcess::startDetached(cmd);
+    qDebug() << cmd;
+    if (!b) {
+            qDebug() << "ERROR : Can't generate DAG view " ;
+    }
+
+}
+
 //------------------------------------------------------------
 void QFaustItem::resized( const QRectF& newRect )
 {
@@ -435,6 +454,18 @@ bool QFaustItem::generateSVG()
         return false;
         
     mIsValid = ( faustProcess.exitCode() == 0 );
+
+    // traitement des erreurs
+    if (faustProcess.exitCode()) {
+        if (!gErrorWindow) {
+            gErrorWindow = new QTextEdit();
+        }
+        gErrorWindow->show();
+        gErrorWindow->append("--------------------\n");
+        gErrorWindow->append(QString(faustProcess.readAllStandardError()));
+        qDebug() << "des erreurs";
+        //qDebug() << faustProcess.readAllStandardError();
+    }
 
     return true;
 }
@@ -1196,6 +1227,7 @@ QMenu* QFaustItem::buildContextMenu()
     m->addAction( "Save as...", this , SIGNAL(saveItemAs()) );
     m->addAction( "Browse Diagram", this , SLOT(exploreSVG()) );
     m->addAction( "Generate Math", this , SLOT(generateMath()) );
+    m->addAction( "Generate Graph", this , SLOT(generateGraph()) );
     m->addAction( "Run Binary",     this , SLOT(runBinary()) );
 
     return m;

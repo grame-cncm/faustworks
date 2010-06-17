@@ -27,12 +27,15 @@
 #include <QSvgRenderer>
 #include <QPen>
 #include <QBrush>
+#include <QTextEdit>
 
 #include "QSwitcher.h"
 
 #define FAUST_ITEM_PALETTE	1
 
 #define FAUST_ITEM_BASE_RGB 238,219,0
+
+extern QTextEdit* gErrorWindow;
 
 class QGraphicsSvgItem;
 

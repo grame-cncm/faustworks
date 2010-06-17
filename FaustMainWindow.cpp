@@ -49,7 +49,7 @@
     #define DIR_SEP                 "\\"
 #elif defined __APPLE__
     #define DEFAULT_FAUST_PATH		"/usr/local/bin/faust"
-    #define SCRIPTS_FOLDER          "scripts.osx"
+    #define SCRIPTS_FOLDER          "../../scripts.osx"
     #define DIR_SEP                 "/"
 #elif defined linux
     #define DEFAULT_FAUST_PATH		"faust"
@@ -599,6 +599,8 @@ void FaustMainWindow::reloadTextEdits()
 //-------------------------------------------------------------------------
 void FaustMainWindow::closeEvent(QCloseEvent *event)
 {
+    if (gErrorWindow) gErrorWindow->close();
+
 	GraphicsSceneMainWindow::closeEvent(event);
 }
 

@@ -68,7 +68,8 @@
 #define DOM_FAUST_ITEM_RECT_WIDTH	"DomFaustItemRectWidth"
 #define DOM_FAUST_ITEM_RECT_HEIGHT	"DomFaustItemRectHeight"
 
-static QTextEdit* gErrorWindow = 0;
+QTextEdit* gErrorWindow = 0;
+
 
 static void removeFolder( const QString& folderName );
 
@@ -439,6 +440,7 @@ void QFaustItem::resized( const QRectF& newRect )
 	Q_EMIT scaleChanged( currentScale() );
 }
 
+
 //------------------------------------------------------------
 bool QFaustItem::generateSVG()
 {
@@ -459,7 +461,7 @@ bool QFaustItem::generateSVG()
 
     if (!gErrorWindow) {
         gErrorWindow = new QTextEdit();
-        gErrorWindow->setWindowFlags(Qt::WindowStaysOnTopHint );
+        gErrorWindow->setWindowFlags(Qt::WindowStaysOnTopHint|Qt::Tool );
         //gErrorWindow->setWindowTitle("Invalid Faust Code");
     }
     if (faustProcess.exitCode()) {

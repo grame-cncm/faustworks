@@ -309,7 +309,7 @@ QString	QFaustItem::code() const
 //------------------------------------------------------------
 QString QFaustItem::lastErrorMessage() const
 {
-	return "Invalid faust code";
+    return "Invalid Faust Code";
 }
 
 //------------------------------------------------------------
@@ -456,15 +456,21 @@ bool QFaustItem::generateSVG()
     mIsValid = ( faustProcess.exitCode() == 0 );
 
     // traitement des erreurs
+
+    if (!gErrorWindow) {
+        gErrorWindow = new QTextEdit();
+        gErrorWindow->setWindowFlags(Qt::WindowStaysOnTopHint );
+        //gErrorWindow->setWindowTitle("Invalid Faust Code");
+    }
     if (faustProcess.exitCode()) {
-        if (!gErrorWindow) {
-            gErrorWindow = new QTextEdit();
-        }
+        gErrorWindow->setWindowTitle("Invalid Faust Code");
         gErrorWindow->show();
         gErrorWindow->append("--------------------\n");
         gErrorWindow->append(QString(faustProcess.readAllStandardError()));
         qDebug() << "des erreurs";
         //qDebug() << faustProcess.readAllStandardError();
+    } else {
+        gErrorWindow->setWindowTitle("Faust Code OK");
     }
 
     return true;

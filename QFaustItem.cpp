@@ -40,6 +40,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QTextEdit>
+#include <QMainWindow>
 
 
 #include "QPaletteItem.h"
@@ -440,6 +441,7 @@ void QFaustItem::resized( const QRectF& newRect )
 	Q_EMIT scaleChanged( currentScale() );
 }
 
+extern QMainWindow* gMainWin;
 
 //------------------------------------------------------------
 bool QFaustItem::generateSVG()
@@ -460,15 +462,18 @@ bool QFaustItem::generateSVG()
     // traitement des erreurs
 
     if (!gErrorWindow) {
-        gErrorWindow = new QTextEdit();
+        gErrorWindow = new QTextEdit(gMainWin);
         gErrorWindow->setWindowFlags(Qt::WindowStaysOnTopHint|Qt::Tool );
+        gErrorWindow->setFontPointSize(10);
+        gErrorWindow->setTextInteractionFlags(Qt::NoTextInteraction);
+        gErrorWindow->ensureCursorVisible();
         //gErrorWindow->setWindowTitle("Invalid Faust Code");
     }
     if (faustProcess.exitCode()) {
         gErrorWindow->setWindowTitle("Invalid Faust Code");
         gErrorWindow->show();
-        gErrorWindow->append("--------------------\n");
         gErrorWindow->append(QString(faustProcess.readAllStandardError()));
+        gErrorWindow->append("--------------------\n");
         qDebug() << "des erreurs";
         //qDebug() << faustProcess.readAllStandardError();
     } else {

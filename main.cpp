@@ -22,8 +22,11 @@
 #include <QString>
 #include <QFontDatabase>
 #include <QFile>
+#include <QMainWindow>
 
 #include "FaustMainWindow.h"
+//FaustMainWindow* gMainWin;
+QMainWindow* gMainWin;
 
 int main(int argc, char *argv[])
 {
@@ -53,17 +56,22 @@ int main(int argc, char *argv[])
 	s.mHasHistory = true;
 	s.mHasStorage = true;
 	GraphicsSceneMainWindow::initApplicationSettings(s);
-	FaustMainWindow mainWin;
+
+    //FaustMainWindow mainWin;
+    gMainWin = new FaustMainWindow();
 	
-	QApplication::instance()->installEventFilter( &mainWin );
+    //QApplication::instance()->installEventFilter( &mainWin );
+    QApplication::instance()->installEventFilter( gMainWin );
 
 	if ( argc >= 2 )
 	{
 		QString fileName( argv[1] );
 		QFileOpenEvent fileOpenEvent( fileName );
-		QApplication::sendEvent( &mainWin , &fileOpenEvent );
-	}
+        //QApplication::sendEvent( &mainWin , &fileOpenEvent );
+        QApplication::sendEvent( gMainWin , &fileOpenEvent );
+    }
 
-	mainWin.show();
-	return app.exec();
+    //mainWin.show();
+    gMainWin->show();
+    return app.exec();
 }

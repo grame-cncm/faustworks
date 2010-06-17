@@ -529,7 +529,7 @@ void GraphicsSceneMainWindow::updateCode()
 
 		if ( mFirstSelectedItem->setCode( newGMNCode ) )
 		{
-			statusBar()->showMessage( LANGUAGE_NAME_SHORT + " Code ok" );
+            statusBar()->showMessage( LANGUAGE_NAME_SHORT + " Code OK" );
 			addToHistory( mFirstSelectedItem );
 		}
 		else

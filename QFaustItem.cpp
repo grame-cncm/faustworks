@@ -78,12 +78,10 @@ static void removeFolder( const QString& folderName );
 //------------------------------------------------------------
 static void remove(const QString& name)
 {
-	if ( QDir( name ).exists() )
+    if ( QDir( name ).exists() ) {
 		removeFolder(name);
-	else
-	{
-		if ( QFile::exists(name) )
-			QFile::remove(name);
+    } else if ( QFile::exists(name) ) {
+        QFile::remove(name);
 	}
 }
 

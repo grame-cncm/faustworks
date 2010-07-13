@@ -53,8 +53,8 @@ int main(int argc, char *argv[])
 
 	s.mDesactiveUIElements << SIZE_TOOL_BAR << RESCALE_ACT << H_ALIGN_ACT << V_ALIGN_ACT;
 
-	s.mHasHistory = true;
-	s.mHasStorage = true;
+    s.mHasHistory = false;
+    s.mHasStorage = false;
 	GraphicsSceneMainWindow::initApplicationSettings(s);
 
     //FaustMainWindow mainWin;

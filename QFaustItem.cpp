@@ -772,7 +772,7 @@ void QFaustItem::buildFinished ( int exitCode, QProcess::ExitStatus exitStatus )
 
 			if ( mBinaryFiles.size() == 0 )
 			{
-//				qDebug() << "QFaustItem::buildFinished : no file";
+                qDebug() << "QFaustItem::buildFinished : no file";
 				Q_EMIT buildError( SCRIPT_NO_FILE , "" );
 			}
 			else
@@ -783,6 +783,9 @@ void QFaustItem::buildFinished ( int exitCode, QProcess::ExitStatus exitStatus )
 				for ( int i = 0 ; i < mBinaryFiles.size() ; i++ )
 				{
                     qDebug() << "QFaustItem::buildFinished : checking " << mBinaryFiles[i] <<"...";
+                    if ( QDir(mBinaryFiles[i]).exists() ) {
+                        qDebug() << "QFaustItem::buildFinished : it's a directory " << mBinaryFiles[i] <<"...";
+                    }
 					if ( !QFile::exists( mBinaryFiles[i] ) && !QDir(mBinaryFiles[i]).exists() )
 					{
 						missingFiles += ( sep + mBinaryFiles[i] );

@@ -48,7 +48,7 @@
     #define SCRIPTS_FOLDER          "scripts.win"
     #define DIR_SEP                 "\\"
 #elif defined __APPLE__
-    #define DEFAULT_FAUST_PATH		"/usr/local/bin/faust"
+    #define DEFAULT_FAUST_PATH		"../faust/faust"
     #define SCRIPTS_FOLDER          "../scripts.osx"
     #define DIR_SEP                 "/"
 #elif defined linux
@@ -159,8 +159,7 @@ void FaustMainWindow::reinitPreferencesSettings()
 
     //	----- Fill the configuration with existing script files in the scripts folder
     for (int i=0; i<scriptsList.size(); i++) {
-        settings.setValue( scriptsList.at(i), QCoreApplication::applicationDirPath()
-                            + DIR_SEP + SCRIPTS_FOLDER + DIR_SEP + scriptsList.at(i) + " $DSP $OPTIONS" );
+        settings.setValue( scriptsList.at(i), QString(SCRIPTS_FOLDER) + DIR_SEP + scriptsList.at(i) + " $DSP $OPTIONS" );
     }
 	settings.endGroup();
 
@@ -394,21 +393,30 @@ void FaustMainWindow::readSettings()
 	reloadTextEdits();
 }
 
+QString makeAbsolutePath(const QString& path)
+{
+    if (path[0]!='.') return path;
+    return QDir::cleanPath(QCoreApplication::applicationDirPath() + "/" + path);
+}
+
 //-------------------------------------------------------------------------
 void FaustMainWindow::readPreferencesSettings()
 {
 	QSettings settings;
-	
+
+    QString faustAbsolutePath = makeAbsolutePath(settings.value(FAUST_PATH_SETTING).toString());
+    //qDebug() << "faustAbsolutePath : " << faustAbsolutePath;
+
 	//Update Faust Path
-	QFaustItem::setFaustPath( settings.value(FAUST_PATH_SETTING).toString() );
+    QFaustItem::setFaustPath( faustAbsolutePath );
 	
 	QProcess p;
-	p.start( settings.value(FAUST_PATH_SETTING).toString() + " -v " );
+    p.start( faustAbsolutePath + " -v " );
 	p.close();
 	if ( p.error() == QProcess::FailedToStart )
 	{
 		QMessageBox::warning( 0 , "Faust not found" , 
-		"Couldn't launch " + settings.value(FAUST_PATH_SETTING).toString() + ".\n"
+        "Couldn't launch " + faustAbsolutePath + ".\n"
 		+ "The file may not exist, or you may not have the rights to execute it. \n"
 		+ "You must define a valid faust executable in the Application Preferences." );
 	}

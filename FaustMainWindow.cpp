@@ -95,6 +95,24 @@ FaustMainWindow::FaustMainWindow()
 	mCPPTextEditDock->setObjectName("CPPTextEditDock");
     addDockWidget( Qt::RightDockWidgetArea , mCPPTextEditDock );
 
+    // Error Window as a dock
+    if (!gErrorWindow) {
+        gErrorWindow = new QTextEdit("", this);
+        //gErrorWindow->setWindowFlags(Qt::WindowStaysOnTopHint|Qt::Tool );
+        gErrorWindow->setFontPointSize(9);
+        gErrorWindow->setTextInteractionFlags(Qt::NoTextInteraction);
+        gErrorWindow->ensureCursorVisible();
+        gErrorWindow->hide();
+        //gErrorWindow->setWindowTitle("Invalid Faust Code");
+
+        mErrorDock = new QDockWidget("Error Messages" , this);
+        mErrorDock->setWidget( gErrorWindow );
+        mErrorDock->setFeatures( QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetFloatable );
+        mErrorDock->setObjectName("ErrorDockObject");
+        addDockWidget( Qt::RightDockWidgetArea , mErrorDock );
+    }
+    //-------------
+
 	init();
 	
 	new FaustHighlighter( mLanguageTextEdit->document() );

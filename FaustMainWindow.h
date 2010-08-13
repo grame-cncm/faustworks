@@ -90,7 +90,7 @@ class FaustMainWindow : public GraphicsSceneMainWindow
 		
 		QTextEdit*		mCPPTextEdit;
 		QDockWidget*	mCPPTextEditDock;
-		
+        QDockWidget*	mErrorDock;
 		QComboBox *		mTargetsComboBox;
 		QComboBox *		mOptionsComboBox;
 		QComboBox *		mDropTypeComboBox;

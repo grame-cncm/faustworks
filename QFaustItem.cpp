@@ -57,7 +57,7 @@
 //#define FILE_KEYWORD		"$NAME"
 #define OPTIONS_KEYWORD		"$OPTIONS"
 
-#define PREFIX				QString("tmp/")
+#define PREFIX				QString("/tmp/")
 #define FILE_MENU   "FileMenu"
 
 #define IDLE_FLAG			1
@@ -447,7 +447,7 @@ bool QFaustItem::generateSVG()
 //	qDebug() << "QFaustItem::generateSVG() : " << mFaustPath + " -svg " + dspFileQuoted();
 
     QProcess faustProcess;
-	faustProcess.start( mFaustPath + " -svg " + " " + dspFileQuoted() );
+    faustProcess.start( mFaustPath + " -svg -blur " + " " + dspFileQuoted() );
 
     if (!faustProcess.waitForStarted())
         return false;   

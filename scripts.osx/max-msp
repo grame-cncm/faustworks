@@ -24,7 +24,7 @@ createInfoPList() {
 	) > "$2"
 }
 
-MYLOG="/Users/orlarey/.faust2max.log"
+MYLOG="/dev/null/"
 
 
 #-------------------------------------------------------------------

@@ -154,12 +154,12 @@ void FaustMainWindow::reinitSettings()
 	settings.setValue( CURRENT_BUILD_OPTION_SETTING , NO_OPTIONS );
 }
 
-
 //-------------------------------------------------------------------------
 void FaustMainWindow::reinitPreferencesSettings()
 {
     QSettings   settings;
-    QDir        scriptsDir(QCoreApplication::applicationDirPath()+"/"+SCRIPTS_FOLDER);
+    //QDir        scriptsDir(binaryDirPath()+"/"+SCRIPTS_FOLDER);
+    QDir        scriptsDir(QCoreApplication::applicationDirPath() + "/" + SCRIPTS_FOLDER);
     QStringList scriptsList = scriptsDir.entryList(QDir::Files, QDir::Name);
 
     qDebug() << "LIST OF SCRIPTS : ";
@@ -258,7 +258,7 @@ void FaustMainWindow::droppedFileTypeChanged(int droppedFileTypeIndex)
 void FaustMainWindow::itemLaunchScriptError(const QString& command)
 {
 	QMessageBox::warning( 0 , "Binary build error" , 
-		"Couldn't launch " + command + "." );
+        "Couldn't launch command " + command + "!" );
 }
 
 //-------------------------------------------------------------------------
@@ -423,7 +423,7 @@ void FaustMainWindow::readPreferencesSettings()
 	QSettings settings;
 
     QString faustAbsolutePath = makeAbsolutePath(settings.value(FAUST_PATH_SETTING).toString());
-    //qDebug() << "faustAbsolutePath : " << faustAbsolutePath;
+    qDebug() << "faustAbsolutePath : " << faustAbsolutePath;
 
 	//Update Faust Path
     QFaustItem::setFaustPath( faustAbsolutePath );

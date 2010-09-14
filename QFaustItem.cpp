@@ -20,6 +20,7 @@
 
 #include "QFaustItem.h"
 
+#include <QCoreApplication>
 #include <QMimeData>
 #include <QGraphicsSvgItem>
 
@@ -1141,7 +1142,13 @@ void QFaustItem::updatePenAndBrush()
 //------------------------------------------------------------
 QString QFaustItem::interpretCommand(const QString& command) const
 {
-	QString result = command;
+    QString result;
+    if (command.startsWith("/"))
+    {
+        result = command;
+    } else {
+        result = QCoreApplication::applicationDirPath() + "/" + command;
+    }
 
     result.replace( DSP_FILE_KEYWORD ,	"\""+file()+"\"" );
 	result.replace( OPTIONS_KEYWORD , QFaustItem::mBuildOptions );

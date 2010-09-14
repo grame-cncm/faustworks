@@ -22,6 +22,7 @@
 #include <QString>
 #include <QFontDatabase>
 #include <QFile>
+#include <QDebug>
 #include <QMainWindow>
 
 #include "FaustMainWindow.h"
@@ -73,5 +74,7 @@ int main(int argc, char *argv[])
 
     //mainWin.show();
     gMainWin->show();
+    qDebug() << "QCoreApplication::applicationDirPath() : " << QCoreApplication::applicationDirPath();
+    qDebug() << "QCoreApplication::applicationFilePath() : " << QCoreApplication::applicationFilePath();
     return app.exec();
 }

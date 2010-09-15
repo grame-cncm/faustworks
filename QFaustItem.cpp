@@ -581,6 +581,9 @@ bool QFaustItem::generateBinary()
 	cleanBinaries();
 	mIsBinaryReady = false;
 	mBuildProcess = new QProcess();
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    env.insert("FAUST", mFaustPath);
+    mBuildProcess->setProcessEnvironment(env);
 	
 	connect( mBuildProcess , SIGNAL( finished ( int , QProcess::ExitStatus ) ) , this , SLOT( buildFinished ( int , QProcess::ExitStatus ) ) );
 

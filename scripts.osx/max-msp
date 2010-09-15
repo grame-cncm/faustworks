@@ -6,6 +6,7 @@
 #               (c) Grame, 2010                                     #
 #                                                                   #
 #####################################################################
+FAUST = ${FAUST:-../faust/faust}
 
 createInfoPList() {
 	(
@@ -24,7 +25,7 @@ createInfoPList() {
 	) > "$2"
 }
 
-MYLOG="/dev/null/"
+MYLOG="/dev/null"
 
 
 #-------------------------------------------------------------------
@@ -102,14 +103,14 @@ for p in $FILES; do
 	echo TMP $TMP >> $MYLOG
 
     # compile faust to c++
-	faust -a max-msp.cpp $OPTIONS "$SRCDIR/$f" -o "$TMP/${f%.dsp}.cpp"
+	$FAUST -a max-msp.cpp $OPTIONS "$SRCDIR/$f" -o "$TMP/${f%.dsp}.cpp"
 
     # compile c++ to binary
     (
 	cd "$TMP"
 	install -d "${f%.dsp}$EXT/Contents/MacOS"
 	$CC -arch i386 -fpascal-strings -fasm-blocks -g -O3 -I/usr/local/include/c74support/max-includes -I/usr/local/include/c74support/msp-includes -c "${f%.dsp}.cpp" -o "${f%.dsp}.i386.o" 
-    $CC -framework MaxAPI -framework Carbon -framework MaxAudioAPI -arch i386 -Wl,-Y,1455 -bundle "${f%.dsp}.i386.o" -o "${f%.dsp}.i386~"  
+    	$CC -framework MaxAPI -framework Carbon -framework MaxAudioAPI -arch i386 -Wl,-Y,1455 -bundle "${f%.dsp}.i386.o" -o "${f%.dsp}.i386~"  
 	$CC -arch ppc -fpascal-strings -fasm-blocks -g -O3 -I/usr/local/include/c74support/max-includes -I/usr/local/include/c74support/msp-includes -c "${f%.dsp}.cpp" -o "${f%.dsp}.ppc.o" 
 	$CC -framework Carbon -framework MaxAPI -framework MaxAudioAPI -arch ppc -Wl,-Y,1455 -bundle "${f%.dsp}.ppc.o"  -o "${f%.dsp}.ppc~" 
 	createInfoPList "${f%.dsp}~" "${f%.dsp}$EXT/Contents/Info.plist"

@@ -2,10 +2,11 @@
 
 #####################################################################
 #                                                                   #
-#               Compiles Faust programs to coreaudio-qt             #
+#               Compiles Faust programs to jack-qt                  #
 #               (c) Grame, 2009                                     #
 #                                                                   #
 #####################################################################
+FAUST = ${FAUST:-../faust/faust}
 
 PATH=$PATH:/usr/local/bin
 
@@ -71,7 +72,7 @@ for p in $FILES; do
     mkdir "$TMP"
 
     # compile faust to c++
-	faust -a ca-qt.cpp $OPTIONS "$SRCDIR/$f" -o "$TMP/${f%.dsp}.cpp"
+	$FAUST -a ca-qt.cpp $OPTIONS "$SRCDIR/$f" -o "$TMP/${f%.dsp}.cpp"
 
     # compile c++ to binary
     (

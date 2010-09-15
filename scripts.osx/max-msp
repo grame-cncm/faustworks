@@ -6,7 +6,7 @@
 #               (c) Grame, 2010                                     #
 #                                                                   #
 #####################################################################
-FAUST = ${FAUST:-../faust/faust}
+FAUST = ${FAUST:-faust}
 
 createInfoPList() {
 	(

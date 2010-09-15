@@ -6,7 +6,7 @@
 #               (c) Grame, 2009                                     #
 #                                                                   #
 #####################################################################
-FAUST = ${FAUST:-../faust/faust}
+FAUST = ${FAUST:-faust}
 
 PATH=$PATH:/usr/local/bin
 

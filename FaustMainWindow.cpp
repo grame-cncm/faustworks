@@ -507,7 +507,8 @@ void FaustMainWindow::createToolBars()
 	
 	mBuildToolBar = addToolBar(tr("&Build"));
 	mBuildToolBar->setObjectName("BuildToolBar");
-	
+/*
+  // supprim par yo le 16 septembre 2010 car inutile....
 	mDropTypeComboBox = new QComboBox( this );
 	mDropTypeComboBox->setToolTip("Dropped-out file");
 	mDropTypeComboBox->setStatusTip("Choose the type of file exported when dropping an item out of the application.");
@@ -517,7 +518,7 @@ void FaustMainWindow::createToolBars()
 	mDropTypeComboBox->addItem("SVG" , QVariant( QFaustItem::DROP_SVG ) );
 	connect( mDropTypeComboBox , SIGNAL(currentIndexChanged(int)) , this , SLOT(droppedFileTypeChanged(int)) );
 	mBuildToolBar->addWidget( mDropTypeComboBox );
-	
+*/
 	mTargetsComboBox = new QComboBox( this );
 	mTargetsComboBox->setToolTip("Target architecture");
 	mTargetsComboBox->setStatusTip("Choose the exported plug-in architecture");

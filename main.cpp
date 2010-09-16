@@ -24,9 +24,10 @@
 #include <QFile>
 #include <QDebug>
 #include <QMainWindow>
+#include <QSplashScreen>
 
 #include "FaustMainWindow.h"
-//FaustMainWindow* gMainWin;
+
 QMainWindow* gMainWin;
 
 int main(int argc, char *argv[])
@@ -35,6 +36,12 @@ int main(int argc, char *argv[])
 
 	Q_INIT_RESOURCE( application );
     app.setWindowIcon(QIcon(":/FaustWorks.png"));
+
+    QPixmap pixmap(":/FaustWorks.png");
+    QSplashScreen splash(pixmap);
+    splash.show();
+    app.processEvents();
+
 
 	QCoreApplication::setOrganizationName( "GRAME" );
     QCoreApplication::setApplicationName( "FaustWorks" );
@@ -61,20 +68,19 @@ int main(int argc, char *argv[])
     //FaustMainWindow mainWin;
     gMainWin = new FaustMainWindow();
 	
-    //QApplication::instance()->installEventFilter( &mainWin );
     QApplication::instance()->installEventFilter( gMainWin );
 
 	if ( argc >= 2 )
 	{
 		QString fileName( argv[1] );
 		QFileOpenEvent fileOpenEvent( fileName );
-        //QApplication::sendEvent( &mainWin , &fileOpenEvent );
         QApplication::sendEvent( gMainWin , &fileOpenEvent );
     }
 
-    //mainWin.show();
     gMainWin->show();
-    qDebug() << "QCoreApplication::applicationDirPath() : " << QCoreApplication::applicationDirPath();
-    qDebug() << "QCoreApplication::applicationFilePath() : " << QCoreApplication::applicationFilePath();
+    splash.finish(gMainWin);
+
+    //qDebug() << "QCoreApplication::applicationDirPath() : " << QCoreApplication::applicationDirPath();
+    //qDebug() << "QCoreApplication::applicationFilePath() : " << QCoreApplication::applicationFilePath();
     return app.exec();
 }

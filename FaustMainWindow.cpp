@@ -87,7 +87,7 @@ FaustMainWindow::FaustMainWindow()
 	mCPPTextEdit->setAcceptRichText( false );
 	mCPPTextEdit->setReadOnly( true );
 	mCPPTextEdit->setLineWrapMode(QTextEdit::NoWrap);
-	mCPPTextEdit->setFontFamily( "courier" );
+    mCPPTextEdit->setFontFamily( "monospace" );
 
 	mCPPTextEditDock = new QDockWidget("C++ code" , this);
 	mCPPTextEditDock->setWidget( mCPPTextEdit );
@@ -115,8 +115,8 @@ FaustMainWindow::FaustMainWindow()
 
 	init();
 	
-	new FaustHighlighter( mLanguageTextEdit->document() );
-	mLanguageTextEdit->setFontFamily( "courier" );
+    FaustHighlighter* fh = new FaustHighlighter( mLanguageTextEdit->document() );
+    mLanguageTextEdit->setFontFamily( "monospace" );
 
 	new CPPHighlighter( mCPPTextEdit->document() );
 

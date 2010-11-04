@@ -7,11 +7,11 @@
 #               (c) Grame, 2010                                     #
 #                                                                   #
 #####################################################################
-VERSION="1.0"
+VERSION="1.1"
 
 # we will hae to embed the faust compiler and the architecture folder
 # at these locations
-FAUSTROOT="../faust-cvs"
+FAUSTROOT="../faust"
 FAUSTBIN="$FAUSTROOT/compiler/faust"
 FAUSTLIB="$FAUSTROOT/architecture"
 

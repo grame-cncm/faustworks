@@ -1252,7 +1252,7 @@ QMenu* QFaustItem::buildContextMenu()
     m->addAction( "Browse Diagram", this , SLOT(exploreSVG()) );
     m->addAction( "Generate Math", this , SLOT(generateMath()) );
     m->addAction( "Generate Graph", this , SLOT(generateGraph()) );
-    m->addAction( "Run Binary",     this , SLOT(runBinary()) );
+    m->addAction( "Run Binary",     this , SLOT(runBinary()), QKeySequence(Qt::CTRL + Qt::Key_R) );
 
     return m;
 }

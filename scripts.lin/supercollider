@@ -7,6 +7,11 @@
 #                                                                   #
 #####################################################################
 
+#-------------------------------------------------------------------
+# Supercollider headers : path to the folder containing :
+# plugin_interface/, common/ and server/ headers
+ 
+SC="/usr/local/include/supercollider"
 
 #-------------------------------------------------------------------
 # Analyze command arguments :
@@ -52,8 +57,7 @@ done
 if [[ $(uname) == Darwin ]]; then
     INCLUDE=""
 else
-    #TODO: the header files should be located properly!
-    INCLUDE="-I/usr/local/include/SuperCollider/plugin_interface -I/usr/local/include/SuperCollider/common -I/usr/local/include/SuperCollider/server -I/usr/include/SuperCollider/plugin_interface -I/usr/include/SuperCollider/common -I/usr/include/SuperCollider/server"
+    INCLUDE="-I$SC/plugin_interface/ -I$SC/common/ -I$SC/server/"
 fi
 
 #-------------------------------------------------------------------
@@ -78,7 +82,7 @@ for p in $FILES; do
     # compile c++ to binary
     (
         cd "$TMP"
-        ${CXX=g++} $CXXFLAGS $OMP $LIB -Dmydsp=${f%.dsp} -o ${f%.dsp}.so ${f%.dsp}.cpp $INCLUDE -shared -fPIC
+        ${CXX=g++} $INCLUDE $CXXFLAGS $OMP -Dmydsp=${f%.dsp} -o ${f%.dsp}.so ${f%.dsp}.cpp -shared -fPIC
         faust2sc $f.xml > "$TMP/${f%.dsp}.sc" 2>/dev/null
     ) > /dev/null
 

@@ -15,6 +15,7 @@ FAUSTROOT="../faust"
 FAUSTBIN="$FAUSTROOT/compiler/faust"
 FAUSTLIB="$FAUSTROOT/architecture"
 
+SRC="../FaustWorks/"
 DST="FaustWorks.app/Contents/"
 
 # delete previously cretaed bundle and dmg
@@ -24,7 +25,7 @@ rm -rf FaustWorks.app/
 make -j 8
 
 #then copy the scripts
-cp -rf scripts.osx $DST
+cp -rf $SRC/scripts.osx $DST
 rm -rf $DST/scripts.osx/CVS
 
 #and faust

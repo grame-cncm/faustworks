@@ -47,14 +47,17 @@
 	#define DEFAULT_FAUST_PATH		"faust.exe"
     #define SCRIPTS_FOLDER          "scripts.win"
     #define DIR_SEP                 "\\"
+	#define FONT_FAMILY				"Monospace"
 #elif defined __APPLE__
-    #define DEFAULT_FAUST_PATH		"../faust/faust"
+    #define DEFAULT_FAUST_PATH		"faust"
     #define SCRIPTS_FOLDER          "../scripts.osx"
     #define DIR_SEP                 "/"
+	#define FONT_FAMILY				"Courier"
 #elif defined linux
     #define DEFAULT_FAUST_PATH		"faust"
     #define SCRIPTS_FOLDER          "scripts.lin"
     #define DIR_SEP                 "/"
+	#define FONT_FAMILY				"Monospace"
 #endif
 
 #define CURRENT_TARGET_ARCHITECTURE_SETTING		"CurrentTargetArchitecture"
@@ -116,7 +119,7 @@ FaustMainWindow::FaustMainWindow()
 	init();
 	
     FaustHighlighter* fh = new FaustHighlighter( mLanguageTextEdit->document() );
-    mLanguageTextEdit->setFontFamily( "monospace" );
+    mLanguageTextEdit->setFontFamily( FONT_FAMILY );
 
 	new CPPHighlighter( mCPPTextEdit->document() );
 

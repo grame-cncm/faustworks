@@ -54,12 +54,17 @@ done
 
 
 #-------------------------------------------------------------------
-# Check darwin specifics
+# Check plateform specifics
 #
 if [[ $(uname) == Darwin ]]; then
     EXT="scx"
-else
+	SCFLAGS="-DNO_LIBSNDFILE -DSC_DARWIN"
+elif [[ $(uname) == Linux ]]; then
     EXT="so"
+	SCFLAGS="-DNO_LIBSNDFILE -DSC_LINUX"
+else
+	echo "unsupported plateform"
+	exit 1
 fi
 
 #-------------------------------------------------------------------
@@ -84,9 +89,9 @@ for p in $FILES; do
     # compile c++ to binary
     (
         cd "$TMP"
-        ${CXX=g++} -DNO_LIBSNDFILE -DSC_DARWIN $INCLUDE $CXXFLAGS $OMP -Dmydsp=${f%.dsp} -o ${f%.dsp}.$EXT ${f%.dsp}.cpp -shared -fPIC
+        ${CXX=g++}  $SCFLAGS $INCLUDE $CXXFLAGS $OMP -Dmydsp=${f%.dsp} -o ${f%.dsp}.$EXT ${f%.dsp}.cpp -shared -fPIC
         faust2sc $f.xml > "$TMP/${f%.dsp}.sc" 2>/dev/null
-    ) ###> /dev/null
+    ) > /dev/null
 
     ##rm -rf "$SRCDIR/${f%.dsp}$EXT"
     cp "$TMP/${f%.dsp}.$EXT" "$SRCDIR/${f%.dsp}.$EXT"

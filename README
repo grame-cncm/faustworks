@@ -1,0 +1,10 @@
+FaustWorks is an IDE (Integrated Development Environment) for the
+Faust dsp programming language.
+
+This version is very experimental and undocumented. It requires
+Faust to be installed as well as QT4. 
+
+FaustWorks is released under the GPL licence
+(http://www.gnu.org/licenses/gpl.html).
+
+

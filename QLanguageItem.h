@@ -38,8 +38,7 @@ class QPaletteItemDropper;
 #define MIME_PALETTE_ID		"MimePaletteId"
 #define MIME_PALETTE_ITEM	"MimePaletteItem"
 
-#define FONT_FAMILY "Arial"
-#define FONT_SIZE	15
+#define FONT_SIZE	12
 
 #define OBJECT_NAME_DELETE_ITEM_AND_FILE_ACT	"DeleteItemAndFileAct"
 #define OBJECT_NAME_UNLINK_ACT					"UnlinkAct"

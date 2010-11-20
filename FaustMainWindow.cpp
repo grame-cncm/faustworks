@@ -118,7 +118,7 @@ FaustMainWindow::FaustMainWindow()
 
 	init();
 	
-    FaustHighlighter* fh = new FaustHighlighter( mLanguageTextEdit->document() );
+    new FaustHighlighter( mLanguageTextEdit->document() ); // note : we need it, but we don't have to store the highlighter
     mLanguageTextEdit->setFontFamily( FONT_FAMILY );
 
 	new CPPHighlighter( mCPPTextEdit->document() );

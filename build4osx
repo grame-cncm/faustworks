@@ -7,49 +7,28 @@
 #               (c) Grame, 2010                                     #
 #                                                                   #
 #####################################################################
-VERSION="1.1"
+VERSION="0.3.0"
 
-# we will hae to embed the faust compiler and the architecture folder
-# at these locations
-FAUSTROOT="../faust"
-FAUSTBIN="$FAUSTROOT/compiler/faust"
-FAUSTLIB="$FAUSTROOT/architecture"
+DISTRIB="FaustWorks-$VERSION"
 
-SRC="../FaustWorks/"
 DST="FaustWorks.app/Contents/"
 
-# delete previously cretaed bundle and dmg
-rm -rf FaustWorks.app/
 
-# first build FaustWorks
-make -j 8
+# copy the scripts
+cp -rf scripts.osx $DST
 
-#then copy the scripts
-cp -rf $SRC/scripts.osx $DST
-rm -rf $DST/scripts.osx/CVS
-
-#and faust
-FAUSTDST="$DST/faust/"
-mkdir -p $FAUSTDST
-cp -f $FAUSTBIN $FAUSTDST
-cp -rf $FAUSTLIB $FAUSTDST
 
 # then create the dmg package with the QT libraries
 macdeployqt FaustWorks.app/
 
 
 # creates the dmg with FaustWorks, documentation and examples
-DISTRIB="FaustWorks-$VERSION"
 
 rm -rf $DISTRIB
 rm -rf $DISTRIB.dmg
 
 mkdir $DISTRIB
-mkdir $DISTRIB/examples
-
 cp -r FaustWorks.app $DISTRIB
-cp -r "$FAUSTROOT/documentation/faust-quick-reference.pdf" $DISTRIB
-cp -rf "$FAUSTROOT/examples/"*.dsp $DISTRIB/examples/
 
 hdiutil create $DISTRIB.dmg -srcfolder $DISTRIB
 

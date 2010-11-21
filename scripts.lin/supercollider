@@ -58,10 +58,10 @@ done
 #
 if [[ $(uname) == Darwin ]]; then
     EXT="scx"
-	SCFLAGS="-DNO_LIBSNDFILE -DSC_DARWIN"
+	SCFLAGS="-DSC_DARWIN -bundle "
 elif [[ $(uname) == Linux ]]; then
     EXT="so"
-	SCFLAGS="-DNO_LIBSNDFILE -DSC_LINUX"
+	SCFLAGS="-DSC_LINUX -shared -fPIC"
 else
 	echo "unsupported plateform"
 	exit 1
@@ -81,7 +81,7 @@ for p in $FILES; do
 	TMP=$TDR/${f%.dsp}
     mkdir "$TMP"
 
-    # compile faust to c++ and xml
+    # compile the .dsp file to c++ and xml
     faust -xml "$SRCDIR/$f" -o /dev/null;
     mv "$SRCDIR/$f.xml" $TMP/
     faust -a supercollider.cpp $OPTIONS "$SRCDIR/$f" -o "$TMP/${f%.dsp}.cpp"
@@ -89,14 +89,14 @@ for p in $FILES; do
     # compile c++ to binary
     (
         cd "$TMP"
-        ${CXX=g++}  $SCFLAGS $INCLUDE $CXXFLAGS $OMP -Dmydsp=${f%.dsp} -o ${f%.dsp}.$EXT ${f%.dsp}.cpp -shared -fPIC
-        faust2sc $f.xml > "$TMP/${f%.dsp}.sc" 2>/dev/null
-    ) > /dev/null
+        faust2sc $f.xml > "${f%.dsp}.sc" 2>/dev/null
+        ${CXX=g++}  -O3 $SCFLAGS $INCLUDE $CXXFLAGS $OMP -Dmydsp=${f%.dsp} -o ${f%.dsp}.$EXT ${f%.dsp}.cpp
+    )> /dev/null
 
-    ##rm -rf "$SRCDIR/${f%.dsp}$EXT"
+    ## move the produced files from tmp to source dir
     cp "$TMP/${f%.dsp}.$EXT" "$SRCDIR/${f%.dsp}.$EXT"
     cp "$TMP/${f%.dsp}.sc" "$SRCDIR/${f%.dsp}.sc"
-	##rm -rf "$TDR"
+	rm -rf "$TDR"
 
     # collects all the files produced
      BINARIES="$BINARIES$SRCDIR/${f%.dsp}.$EXT;$SRCDIR/${f%.dsp}.sc;"

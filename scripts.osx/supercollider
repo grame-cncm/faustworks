@@ -10,10 +10,30 @@
 #-------------------------------------------------------------------
 # Supercollider headers : path to the folder containing :
 # plugin_interface/, common/ and server/ headers
- 
-SC="/usr/local/include/supercollider"
 
-INCLUDE="-I$SC/plugin_interface/ -I$SC/common/ -I$SC/server/ -I$SC/lang/"
+# Possible path
+
+SC0="/usr/include/SuperCollider"
+SC1="/usr/include/supercollider"
+SC2="/usr/local/include/SuperCollider"
+SC3="/usr/local/include/supercollider"
+
+# check if directory exists
+
+if [ -d $SC0 ]; then
+	SC=$SC0
+elif [ -d $SC1 ]; then
+	SC=$SC1
+elif [ -d $SC2 ]; then
+	SC=$SC2
+elif [ -d $SC3 ]; then
+	SC=$SC3
+else 
+	echo "Can't find SuperCollider headers"
+	exit 1
+fi 
+
+INCLUDE="-I$SC/plugin_interface/ -I$SC/common/ -I$SC/server/"
 
 #-------------------------------------------------------------------
 # Analyze command arguments :
@@ -58,10 +78,10 @@ done
 #
 if [[ $(uname) == Darwin ]]; then
     EXT="scx"
-	SCFLAGS="-DSC_DARWIN -bundle "
+	SCFLAGS="-DSC_DARWIN -DNDEBUG -bundle "
 elif [[ $(uname) == Linux ]]; then
     EXT="so"
-	SCFLAGS="-DSC_LINUX -shared -fPIC"
+	SCFLAGS="-DSC_LINUX -DNDEBUG -shared -fPIC"
 else
 	echo "unsupported plateform"
 	exit 1

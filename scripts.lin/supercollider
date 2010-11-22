@@ -10,10 +10,10 @@
 #-------------------------------------------------------------------
 # Supercollider headers : path to the folder containing :
 # plugin_interface/, common/ and server/ headers
- 
-SC="/usr/local/include/supercollider"
 
-INCLUDE="-I$SC/plugin_interface/ -I$SC/common/ -I$SC/server/ -I$SC/lang/"
+SC="/usr/local/include/SuperCollider"
+
+INCLUDE="-I$SC/plugin_interface/ -I$SC/common/ -I$SC/server/"
 
 #-------------------------------------------------------------------
 # Analyze command arguments :

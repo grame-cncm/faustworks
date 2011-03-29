@@ -28,11 +28,6 @@ for p in $@; do
 		CXX=icpc
 		CXXFLAGS='-O3 -xT -ftz -fno-alias -fp-model fast=2'
     fi
-	if [ "$p" == "-osc" ]; then
- 	 OSCINC="INCLUDEPATH+=/usr/local/lib/faust/osclib"
-	 QTDEFS="DEFINES += OSCCTRL"
-	 OSCLIB="-L/usr/local/lib/faust/osclib -lOSCFaust -loscpack"
-	fi
 done
 
 #PHASE 2 : dispatch command arguments
@@ -43,10 +38,12 @@ for p in $@; do
         else
             OMP="-fopenmp"
         fi
-    fi
-  
-    if [ "$p" = -icc ]; then
+    elif [ "$p" = -icc ]; then
     	ignore=" "
+	elif [ "$p" = "-osc" ]; then
+		OSCINC="INCLUDEPATH+=/usr/local/lib/faust/osclib"
+		QTDEFS="DEFINES += OSCCTRL"
+		OSCLIB="-L/usr/local/lib/faust/osclib -lOSCFaust -loscpack"
     elif [ ${p:0:1} = "-" ]; then
 	    OPTIONS="$OPTIONS $p"
 	elif [[ -e "$p" ]]; then
@@ -89,7 +86,7 @@ for p in $FILES; do
 		qmake -project "INCLUDEPATH+=/usr/local/lib/faust/" "$OSCINC" "LIBS+=-framework CoreAudio -framework AudioUnit -framework CoreServices $OSCLIB" "HEADERS+=/usr/local/lib/faust/gui/faustqt.h" "$QTDEFS"
 		qmake $SPEC
         make
-    ) > /dev/null 2>/dev/null
+    ) > /dev/null #2>/dev/null
 
     rm -rf "$SRCDIR/${f%.dsp}$EXT"
     cp -r "$TMP/${f%.dsp}$EXT" "$SRCDIR/${f%.dsp}$EXT"

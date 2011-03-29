@@ -6,9 +6,13 @@
 #               (c) Grame, 2009                                     #
 #                                                                   #
 #####################################################################
-FAUST = ${FAUST:-faust}
-
 PATH=$PATH:/usr/local/bin
+FAUST=faust
+
+OSCINC=""
+QTDEFS=""
+OSCLIB=""
+
 
 #-------------------------------------------------------------------
 # Analyze command arguments :
@@ -20,10 +24,15 @@ PATH=$PATH:/usr/local/bin
 # PHASE 1 : Look for -icc option to force use of intel icc (actually icpc)
 # without having to configure CXX and CXXFLAGS
 for p in $@; do
-	if [ "$p" = -icc ]; then
+	if [ "$p" = "-icc" ]; then
 		CXX=icpc
 		CXXFLAGS='-O3 -xT -ftz -fno-alias -fp-model fast=2'
     fi
+	if [ "$p" == "-osc" ]; then
+ 	 OSCINC="INCLUDEPATH+=/usr/local/lib/faust/osclib"
+	 QTDEFS="DEFINES += OSCCTRL"
+	 OSCLIB="-L/usr/local/lib/faust/osclib -lOSCFaust -loscpack"
+	fi
 done
 
 #PHASE 2 : dispatch command arguments
@@ -77,8 +86,8 @@ for p in $FILES; do
     # compile c++ to binary
     (
 	    cd "$TMP"
-        qmake -project "INCLUDEPATH+=/usr/local/lib/faust/" "LIBS+=-framework CoreAudio -framework AudioUnit -framework CoreServices" "HEADERS+=/usr/local/lib/faust/faustqt.h"
-	    qmake $SPEC
+		qmake -project "INCLUDEPATH+=/usr/local/lib/faust/" "$OSCINC" "LIBS+=-framework CoreAudio -framework AudioUnit -framework CoreServices $OSCLIB" "HEADERS+=/usr/local/lib/faust/gui/faustqt.h" "$QTDEFS"
+		qmake $SPEC
         make
     ) > /dev/null 2>/dev/null
 

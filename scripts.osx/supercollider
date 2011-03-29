@@ -6,6 +6,7 @@
 #               (c) Grame, 2010                                     #
 #                                                                   #
 #####################################################################
+FAUST=/usr/local/bin/faust
 
 #-------------------------------------------------------------------
 # Supercollider headers : path to the folder containing :
@@ -102,9 +103,9 @@ for p in $FILES; do
     mkdir "$TMP"
 
     # compile the .dsp file to c++ and xml
-    faust -xml "$SRCDIR/$f" -o /dev/null;
+    $FAUST -xml "$SRCDIR/$f" -o /dev/null;
     mv "$SRCDIR/$f.xml" $TMP/
-    faust -a supercollider.cpp $OPTIONS "$SRCDIR/$f" -o "$TMP/${f%.dsp}.cpp"
+    $FAUST -a supercollider.cpp $OPTIONS "$SRCDIR/$f" -o "$TMP/${f%.dsp}.cpp"
 
     # compile c++ to binary
     (

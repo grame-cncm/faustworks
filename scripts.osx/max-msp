@@ -6,7 +6,7 @@
 #               (c) Grame, 2010                                     #
 #                                                                   #
 #####################################################################
-FAUST = ${FAUST:-faust}
+FAUST=/usr/local/bin/faust
 
 createInfoPList() {
 	(
@@ -116,7 +116,7 @@ for p in $FILES; do
 	createInfoPList "${f%.dsp}~" "${f%.dsp}$EXT/Contents/Info.plist"
 	lipo -create "${f%.dsp}.i386~" "${f%.dsp}.ppc~"  -output "${f%.dsp}$EXT/Contents/MacOS/${f%.dsp}~"
 
-    ) >> $MYLOG
+    ) >/dev/null
 
     rm -rf "$SRCDIR/${f%.dsp}$EXT"
 

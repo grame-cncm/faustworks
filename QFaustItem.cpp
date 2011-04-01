@@ -1249,6 +1249,8 @@ QMenu* QFaustItem::buildContextMenu()
 
     m->addAction( "Save", this , SLOT(saveItem()) );
     m->addAction( "Save as...", this , SIGNAL(saveItemAs()) );
+    //m->addAction( "Show Faust code", this , SIGNAL(showFaustCode()) );
+    //m->addAction( "Show C++ code", this , SIGNAL(showCppCode()) );
     m->addAction( "Browse Diagram", this , SLOT(exploreSVG()) );
     m->addAction( "Generate Math", this , SLOT(generateMath()) );
     m->addAction( "Generate Graph", this , SLOT(generateGraph()) );

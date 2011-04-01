@@ -5,6 +5,7 @@
 			<LanguageCommand name="+">		<![CDATA[+]]></LanguageCommand>
 			<LanguageCommand name="-">		<![CDATA[-]]></LanguageCommand>
 			<LanguageCommand name="*">		<![CDATA[*]]></LanguageCommand>
+			<LanguageCommand name="^">		<![CDATA[^]]></LanguageCommand>
 			<LanguageCommand name="/">		<![CDATA[/]]></LanguageCommand>
 			<LanguageCommand name="%">		<![CDATA[%]]></LanguageCommand>
 			<LanguageCommand name="int">		<![CDATA[int]]></LanguageCommand>
@@ -20,7 +21,7 @@
 		</LanguageCommandsCategory>
 		<LanguageCommandsCategory name="Bits-Booleans">
 			<LanguageCommand name="&amp;">		<![CDATA[&]]></LanguageCommand>
-			<LanguageCommand name="^">		<![CDATA[^]]></LanguageCommand>
+			<LanguageCommand name="xor">		<![CDATA[xor]]></LanguageCommand>
 			<LanguageCommand name="|">		<![CDATA[|]]></LanguageCommand>
 			<LanguageCommand name="&lt;&lt;">	<![CDATA[<<]]></LanguageCommand>
 			<LanguageCommand name="&gt;&gt;">	<![CDATA[>>]]></LanguageCommand>

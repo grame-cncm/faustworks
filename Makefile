@@ -1,10 +1,16 @@
+
 system	:= $(shell uname -s)
 scriptssrc	:= ../faust1/tools/faust2appls
 scriptslin	:= scripts.lin
 scriptsosx	:= scripts.osx
 
+
+# for osx
+DISTRIB=FaustWorks
+DST="FaustWorks.app/Contents/"
+
 ifeq ($(system), Darwin)
-	SPEC := "-spec macx-g++"
+	SPEC := -spec macx-g++
 else
 	SPEC := ""
 endif
@@ -12,6 +18,16 @@ endif
 
 all : Makefile.QT
 	make -f Makefile.QT
+
+FaustWorks.dmg : all
+	cp -rf scripts.osx $DST
+	macdeployqt FaustWorks.app/
+	rm -rf $DISTRIB
+	rm -rf $DISTRIB.dmg
+	mkdir $DISTRIB
+	cp -r FaustWorks.app $DISTRIB
+	hdiutil create $DISTRIB.dmg -srcfolder $DISTRIB
+
 
 clean : Makefile.QT
 	make -f Makefile.QT clean

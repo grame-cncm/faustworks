@@ -89,16 +89,16 @@ for p in $FILES; do
     CUR=$(pwd)
     f=$(basename "$p")
 	SRCDIR=$(dirname "$p")
-	
+
 	#for debug
 	echo file $f >> $MYLOG
 	echo dir $SRCDIR >> $MYLOG
 
     # creates a temporary dir 
     TDR=$(mktemp -d faust.XXX)
-    TMP="$TDR/${f%.dsp}"
+	TMP="$TDR/${f%.dsp}"
     mkdir "$TMP"
-    
+
     #for debug
 	echo TMP $TMP >> $MYLOG
 
@@ -110,13 +110,13 @@ for p in $FILES; do
 	cd "$TMP"
 	install -d "${f%.dsp}$EXT/Contents/MacOS"
 	$CC -arch i386 -fpascal-strings -fasm-blocks -g -O3 -I/usr/local/include/c74support/max-includes -I/usr/local/include/c74support/msp-includes -c "${f%.dsp}.cpp" -o "${f%.dsp}.i386.o" 
-    	$CC -framework MaxAPI -framework Carbon -framework MaxAudioAPI -arch i386 -Wl,-Y,1455 -bundle "${f%.dsp}.i386.o" -o "${f%.dsp}.i386~"  
+       	$CC -framework MaxAPI -framework Carbon -framework MaxAudioAPI -arch i386 -Wl,-Y,1455 -bundle "${f%.dsp}.i386.o" -o "${f%.dsp}.i386~"  
 	$CC -arch ppc -fpascal-strings -fasm-blocks -g -O3 -I/usr/local/include/c74support/max-includes -I/usr/local/include/c74support/msp-includes -c "${f%.dsp}.cpp" -o "${f%.dsp}.ppc.o" 
 	$CC -framework Carbon -framework MaxAPI -framework MaxAudioAPI -arch ppc -Wl,-Y,1455 -bundle "${f%.dsp}.ppc.o"  -o "${f%.dsp}.ppc~" 
 	createInfoPList "${f%.dsp}~" "${f%.dsp}$EXT/Contents/Info.plist"
 	lipo -create "${f%.dsp}.i386~" "${f%.dsp}.ppc~"  -output "${f%.dsp}$EXT/Contents/MacOS/${f%.dsp}~"
 
-    ) >/dev/null
+    ) > /dev/null
 
     rm -rf "$SRCDIR/${f%.dsp}$EXT"
 

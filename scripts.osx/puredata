@@ -6,8 +6,6 @@
 #               (c) Grame, 2009                                     #
 #                                                                   #
 #####################################################################
-FAUST=/usr/local/bin/faust
-
 
 
 #-------------------------------------------------------------------
@@ -52,7 +50,7 @@ done
 # Check darwin specifics
 #
 if [[ $(uname) == Darwin ]]; then
-    LIB="-DPD -Wall -I/Applications/Pd-extended.app/Contents/Resources/include/ -bundle -undefined suppress -flat_namespace"
+    LIB="-I/usr/include/pd -bundle -undefined suppress -flat_namespace"
     EXT="~.pd_darwin"
 else
     LIB="-I/usr/include/pd -fPIC -shared"
@@ -69,29 +67,29 @@ for p in $FILES; do
 	SRCDIR=$(dirname "$p")
 
     # creates a temporary dir 
-    TDR=$(mktemp -d faust.XXX)
+    TDR=$(mktemp -d)
 	TMP=$TDR/${f%.dsp}
     mkdir "$TMP"
 
     # compile faust to c++ and xml
-    #faust -xml "$SRCDIR/$f" -o /dev/null;
-    $FAUST -a puredata.cpp $OPTIONS "$SRCDIR/$f" -o "$TMP/${f%.dsp}.cpp"
+    faust -xml "$SRCDIR/$f" -o /dev/null;
+    mv "$SRCDIR/$f.xml" $TMP/
+    faust -a puredata.cpp $OPTIONS "$SRCDIR/$f" -o "$TMP/${f%.dsp}.cpp"
 
     # compile c++ to binary
     (
         cd "$TMP"
-        ${CXX=g++} -O3 $CXXFLAGS $OMP $LIB -Dmydsp=${f%.dsp} -o ${f%.dsp}$EXT ${f%.dsp}.cpp
-        #faust2pd -s $f.xml
+        ${CXX=g++} $CXXFLAGS $OMP $LIB -Dmydsp=${f%.dsp} -o ${f%.dsp}$EXT ${f%.dsp}.cpp
+        faust2pd -s $f.xml
     ) > /dev/null
 
-    rm -rf "$SRCDIR/${f%.dsp}$EXT"
+    ##rm -rf "$SRCDIR/${f%.dsp}$EXT"
     cp "$TMP/${f%.dsp}$EXT" "$SRCDIR/${f%.dsp}$EXT"
-    #cp "$TMP/${f%.dsp}.pd" "$SRCDIR/${f%.dsp}.pd"
-	rm -rf "$TDR"
+    cp "$TMP/${f%.dsp}.pd" "$SRCDIR/${f%.dsp}.pd"
+	##rm -rf "$TDR"
 
     # collects all the files produced
-     #BINARIES="$BINARIES$SRCDIR/${f%.dsp}$EXT;$SRCDIR/${f%.dsp}.pd;"
-     BINARIES="$BINARIES$SRCDIR/${f%.dsp}$EXT;"
+     BINARIES="$BINARIES$SRCDIR/${f%.dsp}$EXT;$SRCDIR/${f%.dsp}.pd;"
 
 done
 

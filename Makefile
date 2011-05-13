@@ -1,6 +1,6 @@
 
 system	:= $(shell uname -s)
-scriptssrc	:= ../faust1/tools/faust2appls
+scriptssrc	:= ../faust/tools/faust2appls
 scriptslin	:= scripts.lin
 scriptsosx	:= scripts.osx
 
@@ -22,11 +22,11 @@ all : Makefile.QT
 FaustWorks.dmg : all
 	cp -rf scripts.osx $DST
 	macdeployqt FaustWorks.app/
-	rm -rf $DISTRIB
-	rm -rf $DISTRIB.dmg
-	mkdir $DISTRIB
-	cp -r FaustWorks.app $DISTRIB
-	hdiutil create $DISTRIB.dmg -srcfolder $DISTRIB
+	rm -rf $(DISTRIB)
+	rm -rf $(DISTRIB).dmg
+	mkdir $(DISTRIB)
+	cp -r FaustWorks.app $(DISTRIB)
+	hdiutil create $(DISTRIB).dmg -srcfolder $(DISTRIB)
 
 
 clean : Makefile.QT

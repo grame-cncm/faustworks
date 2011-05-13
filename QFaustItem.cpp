@@ -980,9 +980,9 @@ void QFaustItem::init()
 {
 	mSVGItem = new QGraphicsSvgItem(this);
 	mSVGItem->setSharedRenderer( &mSVGRenderer );
-#if !linux		// bug in Qt 4.4 with the linux cache mode 
+//#if !linux		// bug in Qt 4.4 with the linux cache mode
 	mSVGItem->setCacheMode( QGraphicsItem::DeviceCoordinateCache );
-#endif
+//#endif
 
 	mWorkingDirectory = PREFIX + ".";
 
@@ -1001,8 +1001,9 @@ void QFaustItem::init()
 //	mPenBrushSwitcher.addFlag(IDLE_FLAG,		0, PenBrush( QPen(QColor(FAUST_ITEM_BASE_RGB,50) , 3) ,		QBrush(QColor(FAUST_ITEM_BASE_RGB,50)) ) );
 //	mPenBrushSwitcher.addFlag(HIGHLIGHTED_FLAG, 1, PenBrush( QPen(QColor(FAUST_ITEM_BASE_RGB,100) , 3) ,	QBrush(QColor(FAUST_ITEM_BASE_RGB,100)) ) );
 //	mPenBrushSwitcher.addFlag(SELECTED_FLAG,	2, PenBrush( QPen(QColor(FAUST_ITEM_BASE_RGB,255) , 3) ,	QBrush(QColor(FAUST_ITEM_BASE_RGB,100)) ) );
-	mPenBrushSwitcher.addFlag(IDLE_FLAG,		0, PenBrush( QPen(QColor(FAUST_ITEM_BASE_RGB,50) , 3) ) );
-	mPenBrushSwitcher.addFlag(HIGHLIGHTED_FLAG, 1, PenBrush( QPen(QColor(FAUST_ITEM_BASE_RGB,100) , 3) ) );
+    //mPenBrushSwitcher.addFlag(IDLE_FLAG,		0, PenBrush( QPen(QColor(FAUST_ITEM_BASE_RGB,50) , 3) ) );
+    mPenBrushSwitcher.addFlag(IDLE_FLAG,		0, PenBrush( QPen(QColor(FAUST_ITEM_BASE_RGB,0) , 3) ) );       // pas de bord jaune quand l'item n'est pas selectionné
+    mPenBrushSwitcher.addFlag(HIGHLIGHTED_FLAG, 1, PenBrush( QPen(QColor(FAUST_ITEM_BASE_RGB,100) , 3) ) );     // le bord devient visible quand on passe sur l'item
 	mPenBrushSwitcher.addFlag(SELECTED_FLAG,	2, PenBrush( QPen(QColor(FAUST_ITEM_BASE_RGB,255) , 3) ) );
 
 	mPenBrushSwitcher.setFlag(IDLE_FLAG, true);

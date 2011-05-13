@@ -8,6 +8,7 @@ OSCDEFS=""
 #                                                                   #
 #####################################################################
 
+CXXFLAGS='-O3 -march=native -mfpmath=sse -msse -msse2 -msse3 -ffast-math -ftree-vectorize'
 
 #-------------------------------------------------------------------
 # Analyze command arguments :
@@ -21,7 +22,7 @@ OSCDEFS=""
 for p in $@; do
 	if [ "$p" = -icc ]; then
 		CXX=icpc
-		CXXFLAGS='-O3 -xT -ftz -fno-alias -fp-model fast=2'
+		CXXFLAGS='-O3 -xHost -ftz -fno-alias -fp-model fast=2'
     fi
 done
 

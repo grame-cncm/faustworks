@@ -7,6 +7,7 @@ scriptsosx	:= scripts.osx
 
 # for osx
 DISTRIB=FaustWorks
+version="11.05"
 DST="FaustWorks.app/Contents/"
 
 ifeq ($(system), Darwin)
@@ -27,6 +28,15 @@ $(DISTRIB).dmg : all
 	mkdir $(DISTRIB)
 	cp -r FaustWorks.app $(DISTRIB)
 	hdiutil create $(DISTRIB).dmg -srcfolder $(DISTRIB)
+
+
+# make a FaustWorks distribution by cloning the git repository
+clonedist :
+	git clone git://faudiostream.git.sourceforge.net/gitroot/faudiostream/FaustWorks FaustWorks-$(version)
+	rm -rf FaustWorks-$(version)/.git
+	rm -f FaustWorks-$(version).tar.gz
+	tar czfv FaustWorks-$(version).tar.gz FaustWorks-$(version)
+	rm -rf FaustWorks-$(version)
 
 
 clean : Makefile.QT

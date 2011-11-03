@@ -19,6 +19,8 @@ endif
 
 all : Makefile.QT
 	make -f Makefile.QT
+	
+dmg : fillscripts $(DISTRIB).dmg
 
 $(DISTRIB).dmg : all
 	cp -rf scripts.osx $(DST)

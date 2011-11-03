@@ -48,7 +48,7 @@ Makefile.QT:
 	qmake $(SPEC) -o Makefile.QT
 	
 ##############################################
-fillscripts : fillscripts-lin fillscripts-osx
+scripts : fillscripts-lin fillscripts-osx
 
 ####
 fillscripts-lin : $(scriptslin)/alsagtk $(scriptslin)/jackgtk $(scriptslin)/jackqt $(scriptslin)/csound $(scriptslin)/puredata $(scriptslin)/portaudioqt $(scriptslin)/supercollider 

@@ -414,15 +414,31 @@ void QFaustItem::generateMath ()
 
 
 /**
- * Call external script to generate and view internal DAG
+ * Call external script to generate and view internal Loop DAG
  */
-void QFaustItem::generateGraph ()
+void QFaustItem::generateLoopGraph ()
 {
     QString cmd =  "faust2graphviewer " + dspFileQuoted();
     bool b = QProcess::startDetached(cmd);
     qDebug() << cmd;
     if (!b) {
             qDebug() << "ERROR : Can't generate DAG view " ;
+    }
+
+}
+
+
+
+/**
+ * Call external script to generate and view internal signal directed graph
+ */
+void QFaustItem::generateSigGraph ()
+{
+    QString cmd =  "faust2sigviewer " + dspFileQuoted();
+    bool b = QProcess::startDetached(cmd);
+    qDebug() << cmd;
+    if (!b) {
+            qDebug() << "ERROR : Can't generate signal graph view " ;
     }
 
 }
@@ -1254,7 +1270,8 @@ QMenu* QFaustItem::buildContextMenu()
     //m->addAction( "Show C++ code", this , SIGNAL(showCppCode()) );
     m->addAction( "Browse Diagram", this , SLOT(exploreSVG()) );
     m->addAction( "Generate Math", this , SLOT(generateMath()) );
-    m->addAction( "Generate Graph", this , SLOT(generateGraph()) );
+    m->addAction( "Generate Loop Graph", this , SLOT(generateLoopGraph()) );
+    m->addAction( "Generate Signal Graph", this , SLOT(generateSigGraph()) );
     m->addAction( "Run Binary",     this , SLOT(runBinary()), QKeySequence(Qt::CTRL + Qt::Key_R) );
 
     return m;

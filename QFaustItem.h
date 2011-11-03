@@ -86,11 +86,11 @@ class QFaustItem : public QLanguageItem
 		void buildError( int errorType , const QString& msg );
 
     public Q_SLOTS:
-        void runBinary();       // run the binary code of the item
-        void exploreSVG ();     // run an external brwoser to explore the SVG block-diagram
-        void generateMath ();
-        void generateGraph ();
-
+        void runBinary();           // run the binary code of the item
+        void exploreSVG ();         // run an external brwoser to explore the SVG block-diagram
+        void generateMath ();       // generate mathematical documentation
+        void generateLoopGraph ();  // generate internal loop DAG
+        void generateSigGraph ();   // generate internal signal graph
 
 		void resized( const QRectF& newRect );
 

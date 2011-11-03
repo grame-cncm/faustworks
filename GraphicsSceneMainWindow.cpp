@@ -77,7 +77,8 @@
 
 //#define ITEM_SIZE_BOUNDS	QSize( 400,300 )
 
-#define TEXT_EDIT_TEMPO 2500
+//#define TEXT_EDIT_TEMPO 2500
+#define TEXT_EDIT_TEMPO 1000
 #define TEXT_EDIT_TEMPO_FACTOR 0.1f
 
 #define COMBINATOR_PIXMAP_MARGIN 10
@@ -507,7 +508,8 @@ void GraphicsSceneMainWindow::sceneChanged( const QList<QRectF> &)
 //-------------------------------------------------------------------------
 void GraphicsSceneMainWindow::textEditActivity()
 {	
-	mLanguageTextEditTimer->start( TEXT_EDIT_TEMPO + mLanguageTextEdit->toPlainText().length() * TEXT_EDIT_TEMPO_FACTOR );
+    //mLanguageTextEditTimer->start( TEXT_EDIT_TEMPO + mLanguageTextEdit->toPlainText().length() * TEXT_EDIT_TEMPO_FACTOR );
+    mLanguageTextEditTimer->start( TEXT_EDIT_TEMPO);
 }
 
 //-------------------------------------------------------------------------

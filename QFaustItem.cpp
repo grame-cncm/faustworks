@@ -499,7 +499,7 @@ static QString getFileContent(const QString& fileName)
     while (!file.atEnd()) 
 	{
         QByteArray line = file.readLine();
-        content += line;
+        content += QString::fromUtf8(line);
     }
 	file.close();
 	return content;

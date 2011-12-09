@@ -4,3 +4,6 @@ qrc_*
 ui_*
 Makefile
 FaustWorks
+*.app
+.DS_Store
+*.dmg

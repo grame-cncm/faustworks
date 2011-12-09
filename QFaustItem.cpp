@@ -326,7 +326,6 @@ bool QFaustItem::isValid() const
 
 void QFaustItem::mouseDoubleClickEvent( QGraphicsSceneMouseEvent * event )
 {
-    event->accept();
     runBinary();
 }
 
@@ -349,35 +348,20 @@ void QFaustItem::connectNotify ( const char * signal )
 void QFaustItem::runBinary()
 {
     
-    if (mBinaryFiles.size() > 0) 
-	{
+    if (mBinaryFiles.size() > 0) {
 		QString bin = mBinaryFiles[0];
 
 		//Little hack to use .app on MacosX.
         qDebug () << bin;
-        
-		if ( bin.right(4) == ".app" )
-		{
-			//bin += "/Contents/MacOS/" + QFileInfo( bin ).baseName() ;
+        if ( bin.right(4) == ".app" )   {
             bin = "open " + bin ;
 		}
 
         QProcess::startDetached ( bin);
-    } 
-	else 
-	{
+    } else {
         QMessageBox msgBox;
         msgBox.setText("Faust Item has no binary to execute");
         msgBox.exec();
-    }
-    
-    if (mBinaryFiles.size() > 0) 
-	{
-    QString bin = mBinaryFiles[0];
-    
-     bin = "open " + bin ;
-      QProcess::startDetached ( bin);
-        
     }
 }
 

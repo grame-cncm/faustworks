@@ -45,17 +45,14 @@
 
 #if defined WIN32
 	#define DEFAULT_FAUST_PATH		"faust.exe"
-    #define SCRIPTS_FOLDER          "scripts.win"
     #define DIR_SEP                 "\\"
 	#define FONT_FAMILY				"Monospace"
 #elif defined __APPLE__
     #define DEFAULT_FAUST_PATH		"/usr/local/bin/faust"
-    #define SCRIPTS_FOLDER          "../scripts.osx"
     #define DIR_SEP                 "/"
 	#define FONT_FAMILY				"Courier"
 #elif defined linux
     #define DEFAULT_FAUST_PATH		"faust"
-    #define SCRIPTS_FOLDER          "scripts.lin"
     #define DIR_SEP                 "/"
 	#define FONT_FAMILY				"Monospace"
 #endif
@@ -90,7 +87,7 @@ FaustMainWindow::FaustMainWindow()
 	mCPPTextEdit->setAcceptRichText( false );
 	mCPPTextEdit->setReadOnly( true );
 	mCPPTextEdit->setLineWrapMode(QTextEdit::NoWrap);
-    mCPPTextEdit->setFontFamily( "monospace" );
+    mCPPTextEdit->setFontFamily( FONT_FAMILY );
 
 	mCPPTextEditDock = new QDockWidget("C++ code" , this);
 	mCPPTextEditDock->setWidget( mCPPTextEdit );
@@ -161,14 +158,6 @@ void FaustMainWindow::reinitSettings()
 void FaustMainWindow::reinitPreferencesSettings()
 {
     QSettings   settings;
-    //QDir        scriptsDir(binaryDirPath()+"/"+SCRIPTS_FOLDER);
-    QDir        scriptsDir(QCoreApplication::applicationDirPath() + "/" + SCRIPTS_FOLDER);
-    QStringList scriptsList = scriptsDir.entryList(QDir::Files, QDir::Name);
-
-    qDebug() << "LIST OF SCRIPTS : ";
-    for (int i=0; i<scriptsList.size(); i++) {
-        qDebug() << "script " << i << " = " << scriptsList.at(i);
-    }
 
 
 	//	----- Faust Path
@@ -179,9 +168,6 @@ void FaustMainWindow::reinitPreferencesSettings()
 	settings.beginGroup(TARGETS_SETTING);
 
     //	----- Fill the configuration with existing script files in the scripts folder
-//    for (int i=0; i<scriptsList.size(); i++) {
-//        settings.setValue( scriptsList.at(i), QString(SCRIPTS_FOLDER) + DIR_SEP + scriptsList.at(i) + " $DSP $OPTIONS" );
-//    }
 
 #if defined linux
     settings.setValue( "jack-gtk",  QString("faust2jack") + " $DSP $OPTIONS" );

@@ -6,7 +6,7 @@ DISTRIB=FaustWorks
 version="12.04"
 
 ifeq ($(system), Darwin)
-	SPEC := -spec macx-g++
+	SPEC := -spec macx-llvm
 	DST  := "FaustWorks.app/Contents/"
 
 else

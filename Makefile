@@ -36,7 +36,7 @@ uninstall-Linux :
 install-Darwin :
 
 
-dmg : fillscripts $(DISTRIB).dmg
+dmg : $(DISTRIB).dmg
 
 $(DISTRIB).dmg : all
 	macdeployqt FaustWorks.app/
@@ -56,11 +56,13 @@ clonedist :
 	rm -rf FaustWorks-$(version)
 
 
-clean : Makefile.QT
-	make -f Makefile.QT clean
+clean : Makefile.qt4
+	make -f Makefile.qt4 clean
+	rm FaustWorks.pro.user
 
 Makefile.qt4: 
 	qmake $(SPEC) -o Makefile.qt4
+
 	
 	
 	

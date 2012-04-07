@@ -25,7 +25,6 @@
 #include <assert.h>
 
 #define DEFAULT_BORDER_WIDTH 5
-#define DEFAULT_BORDER_BRUSH QColor(150,150,150,50)
 #define DEFAULT_BORDER_BRUSH QColor(0,150,0,50) // couleur quand on fait un resize
 
 //-------------------------------------------------------------------------

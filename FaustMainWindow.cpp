@@ -45,17 +45,14 @@
 
 #if defined WIN32
 	#define DEFAULT_FAUST_PATH		"faust.exe"
-    #define SCRIPTS_FOLDER          "scripts.win"
     #define DIR_SEP                 "\\"
 	#define FONT_FAMILY				"Monospace"
 #elif defined __APPLE__
     #define DEFAULT_FAUST_PATH		"/usr/local/bin/faust"
-    #define SCRIPTS_FOLDER          "../scripts.osx"
     #define DIR_SEP                 "/"
 	#define FONT_FAMILY				"Courier"
 #elif defined linux
     #define DEFAULT_FAUST_PATH		"faust"
-    #define SCRIPTS_FOLDER          "scripts.lin"
     #define DIR_SEP                 "/"
 	#define FONT_FAMILY				"Monospace"
 #endif
@@ -90,7 +87,7 @@ FaustMainWindow::FaustMainWindow()
 	mCPPTextEdit->setAcceptRichText( false );
 	mCPPTextEdit->setReadOnly( true );
 	mCPPTextEdit->setLineWrapMode(QTextEdit::NoWrap);
-    mCPPTextEdit->setFontFamily( "monospace" );
+    mCPPTextEdit->setFontFamily( FONT_FAMILY );
 
 	mCPPTextEditDock = new QDockWidget("C++ code" , this);
 	mCPPTextEditDock->setWidget( mCPPTextEdit );
@@ -161,14 +158,6 @@ void FaustMainWindow::reinitSettings()
 void FaustMainWindow::reinitPreferencesSettings()
 {
     QSettings   settings;
-    //QDir        scriptsDir(binaryDirPath()+"/"+SCRIPTS_FOLDER);
-    QDir        scriptsDir(QCoreApplication::applicationDirPath() + "/" + SCRIPTS_FOLDER);
-    QStringList scriptsList = scriptsDir.entryList(QDir::Files, QDir::Name);
-
-    qDebug() << "LIST OF SCRIPTS : ";
-    for (int i=0; i<scriptsList.size(); i++) {
-        qDebug() << "script " << i << " = " << scriptsList.at(i);
-    }
 
 
 	//	----- Faust Path
@@ -179,12 +168,32 @@ void FaustMainWindow::reinitPreferencesSettings()
 	settings.beginGroup(TARGETS_SETTING);
 
     //	----- Fill the configuration with existing script files in the scripts folder
-    for (int i=0; i<scriptsList.size(); i++) {
-        settings.setValue( scriptsList.at(i), QString(SCRIPTS_FOLDER) + DIR_SEP + scriptsList.at(i) + " $DSP $OPTIONS" );
-    }
+
+#if defined linux
+    settings.setValue( "jack-gtk",  QString("faust2jack") + " $DSP $OPTIONS" );
+    settings.setValue( "alsa-gtk",  QString("faust2alsa") + " $DSP $OPTIONS" );
+    settings.setValue( "jack-qt",  QString("faust2jaqt") + " $DSP $OPTIONS" );
+    settings.setValue( "alsa-qt",  QString("faust2alqt") + " $DSP $OPTIONS" );
+    settings.setValue( "csound",  QString("faust2csound") + " $DSP $OPTIONS" );
+    settings.setValue( "puredata",  QString("faust2puredata") + " $DSP $OPTIONS" );
+    settings.setValue( "supercollider",  QString("faust2supercollider") + " $DSP $OPTIONS" );
+    settings.setValue( "ladspa",  QString("faust2ladspa") + " $DSP $OPTIONS" );
+    settings.setValue( "dssi",  QString("faust2dssi") + " $DSP $OPTIONS" );
+
+#elif defined __APPLE__
+    settings.setValue( "coreaudio-qt",  QString("faust2caqt") + " $DSP $OPTIONS" );
+    settings.setValue( "maxmsp",  QString("faust2msp") + " $DSP $OPTIONS" );
+    settings.setValue( "vst",  QString("faust2vst") + " $DSP $OPTIONS" );
+    settings.setValue( "csound",  QString("faust2csound") + " $DSP $OPTIONS" );
+    settings.setValue( "puredata",  QString("faust2puredata") + " $DSP $OPTIONS" );
+    settings.setValue( "supercollider",  QString("faust2supercollider") + " $DSP $OPTIONS" );
+
+#elif defined WIN32
+#endif
+
 	settings.endGroup();
 
-	// ----- Build optins
+    // ----- Build options
 	settings.remove( OPTIONS_SETTING );
 	settings.beginGroup( OPTIONS_SETTING );
     settings.setValue( "Scalar" ,	"" );

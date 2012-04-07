@@ -324,7 +324,7 @@ bool QFaustItem::isValid() const
 //------------------------------------------------------------------------
 //------------------------------------------------------------
 
-void QFaustItem::mouseDoubleClickEvent( QGraphicsSceneMouseEvent * event )
+void QFaustItem::mouseDoubleClickEvent( QGraphicsSceneMouseEvent * )
 {
     runBinary();
 }
@@ -1144,16 +1144,19 @@ void QFaustItem::updatePenAndBrush()
 }
 
 //------------------------------------------------------------
+// Create the shell command that translates the dsp code
+// into binary code
 QString QFaustItem::interpretCommand(const QString& command) const
 {
     QString result;
-    if (command.startsWith("/"))
-    {
-        result = command;
-    } else {
-        result = QCoreApplication::applicationDirPath() + "/" + command;
-    }
+//    if (command.startsWith("/"))
+//    {
+//        result = command;
+//    } else {
+//        result = QCoreApplication::applicationDirPath() + "/" + command;
+//    }
 
+    result = command;
     result.replace( DSP_FILE_KEYWORD ,	"\""+file()+"\"" );
 	result.replace( OPTIONS_KEYWORD , QFaustItem::mBuildOptions );
 	QFileInfo fileInfo( file() );

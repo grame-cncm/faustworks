@@ -7,6 +7,6 @@ FaustWorks
 *.app
 .DS_Store
 *.dmg
-Makefile.QT
+Makefile.qt4
 FaustWorks.pro.user
 

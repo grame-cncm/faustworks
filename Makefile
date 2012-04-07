@@ -15,8 +15,8 @@ else
 endif
 
 
-all : Makefile.QT
-	make -f Makefile.QT
+all : Makefile.qt4
+	make -f Makefile.qt4
 
 install : install-$(system)
 uninstall : uninstall-$(system)
@@ -59,8 +59,8 @@ clonedist :
 clean : Makefile.QT
 	make -f Makefile.QT clean
 
-Makefile.QT: 
-	qmake $(SPEC) -o Makefile.QT
+Makefile.qt4: 
+	qmake $(SPEC) -o Makefile.qt4
 	
 	
 	

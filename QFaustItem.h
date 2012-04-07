@@ -102,7 +102,7 @@ class QFaustItem : public QLanguageItem
  	protected:
 	
         virtual QMenu * buildContextMenu();
-		void mouseDoubleClickEvent( QGraphicsSceneMouseEvent * event );
+        void mouseDoubleClickEvent( QGraphicsSceneMouseEvent *  );
 	
 		void connectNotify ( const char * signal );
 	

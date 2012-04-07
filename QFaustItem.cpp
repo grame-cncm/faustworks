@@ -324,7 +324,7 @@ bool QFaustItem::isValid() const
 //------------------------------------------------------------------------
 //------------------------------------------------------------
 
-void QFaustItem::mouseDoubleClickEvent( QGraphicsSceneMouseEvent * event )
+void QFaustItem::mouseDoubleClickEvent( QGraphicsSceneMouseEvent * )
 {
     runBinary();
 }

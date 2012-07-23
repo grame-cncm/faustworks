@@ -1,4 +1,6 @@
 system	:= $(shell uname -s)
+qm4 := $(shell which qmake-qt4)
+qm := $(if $(qm4),$(qm4),qmake)
 
 
 # for osx
@@ -61,7 +63,7 @@ clean : Makefile.qt4
 	rm FaustWorks.pro.user
 
 Makefile.qt4: 
-	qmake $(SPEC) -o Makefile.qt4
+	$(qm) $(SPEC) -o Makefile.qt4
 
 	
 	

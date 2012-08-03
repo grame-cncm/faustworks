@@ -181,12 +181,12 @@ void FaustMainWindow::reinitPreferencesSettings()
     settings.setValue( "dssi",  QString("faust2dssi") + " $DSP $OPTIONS" );
 
 #elif defined __APPLE__
-    settings.setValue( "coreaudio-qt",  QString("faust2caqt") + " $DSP $OPTIONS" );
-    settings.setValue( "maxmsp",  QString("faust2msp") + " $DSP $OPTIONS" );
-    settings.setValue( "vst",  QString("faust2vst") + " $DSP $OPTIONS" );
-    settings.setValue( "csound",  QString("faust2csound") + " $DSP $OPTIONS" );
-    settings.setValue( "puredata",  QString("faust2puredata") + " $DSP $OPTIONS" );
-    settings.setValue( "supercollider",  QString("faust2supercollider") + " $DSP $OPTIONS" );
+    settings.setValue( "coreaudio-qt",  QString("/usr/local/bin/faust2caqt") + " $DSP $OPTIONS" );
+    settings.setValue( "maxmsp",  QString("/usr/local/bin/faust2msp") + " $DSP $OPTIONS" );
+    settings.setValue( "vst",  QString("/usr/local/bin/faust2vst") + " $DSP $OPTIONS" );
+    settings.setValue( "csound",  QString("/usr/local/bin/faust2csound") + " $DSP $OPTIONS" );
+    settings.setValue( "puredata",  QString("/usr/local/bin/faust2puredata") + " $DSP $OPTIONS" );
+    settings.setValue( "supercollider",  QString("/usr/local/bin/faust2supercollider") + " $DSP $OPTIONS" );
 
 #elif defined WIN32
 #endif

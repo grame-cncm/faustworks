@@ -13,7 +13,7 @@ ifeq ($(system), Darwin)
 
 else
 	SPEC := ""
-	PREFIX := /usr/local
+	PREFIX := /usr
 endif
 
 
@@ -24,16 +24,18 @@ install : install-$(system)
 uninstall : uninstall-$(system)
 
 install-Linux :
-	cp FaustWorks $(PREFIX)/bin
-	cp Resources/FaustWorks.svg /usr/share/icons/hicolor/scalable/apps/
-	cp FaustWorks.desktop /usr/share/applications/
-	cp FaustWorks.desktop /usr/share/app-install/desktop/FaustWorks\:FaustWorks.desktop
+	install FaustWorks $(PREFIX)/bin
+	install faustworks.desktop $(PREFIX)/share/applications/
+	install Resources/faustworks.xpm $(PREFIX)/share/pixmaps/
+	install Resources/faustworks.png $(PREFIX)/share/icons/hicolor/32x32/apps/
+	install Resources/faustworks.svg $(PREFIX)/share/icons/hicolor/scalable/apps/
 
 uninstall-Linux :
 	rm -f $(PREFIX)/bin/FaustWorks
-	rm -f /usr/share/icons/hicolor/scalable/apps/FaustWorks.svg
-	rm -f /usr/share/applications/FaustWorks.desktop
-	rm -f /usr/share/app-install/desktop/FaustWorks\:FaustWorks.desktop
+	rm -f $(PREFIX)/share/applications/faustworks.desktop 
+	rm -f $(PREFIX)/share/pixmaps/faustworks.xpm 
+	rm -f $(PREFIX)/share/icons/hicolor/32x32/apps/faustworks.png
+	rm -f $(PREFIX)/share/icons/hicolor/scalable/apps/faustworks.svg
 
 install-Darwin :
 
@@ -60,7 +62,7 @@ clonedist :
 
 clean : Makefile.qt4
 	make -f Makefile.qt4 clean
-	rm FaustWorks.pro.user
+	rm -f FaustWorks.pro.user
 
 Makefile.qt4: 
 	$(qm) $(SPEC) -o Makefile.qt4

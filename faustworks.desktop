@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=FaustWorks
+GenericName=IDE for Faust
+Comment=IDE for Faust dsp programming language
+Encoding=UTF-8
+Version=1.0
+Terminal=false
+Exec=FaustWorks
+Icon=faustworks
+Categories=Development;Audio;
+
+

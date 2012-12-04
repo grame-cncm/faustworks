@@ -122,6 +122,7 @@ class QFaustItem : public QLanguageItem
 		QString cppFileQuoted() const;
 		QString dspFile() const;
 		QString dspFileQuoted() const;
+        QString dspFileQuotedSpecial() const;
 		QString tempName() const;
 		QString itemName() const;
 		//QString namedDSPFile() const;

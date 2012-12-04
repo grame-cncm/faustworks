@@ -373,6 +373,7 @@ void QFaustItem::exploreSVG ()
 {
     QString filename = QFileInfo(svgRootFile()).absoluteFilePath();
     QUrl url = QUrl::fromLocalFile(filename);
+    qDebug() << "QDesktopServices::openUrl (" << url << ")" ;
     bool b = QDesktopServices::openUrl(url);
     if (!b) {
        qDebug() << "ERROR : Can't open the SVG URL " << url ;
@@ -386,7 +387,7 @@ void QFaustItem::exploreSVG ()
  */
 void QFaustItem::generateMath ()
 {
-    QString cmd =  "faust2mathviewer " + dspFileQuoted();
+    QString cmd =  "faust2mathviewer " + dspFileQuotedSpecial();
     bool b = QProcess::startDetached(cmd);
     qDebug() << cmd;
     if (!b) {
@@ -402,7 +403,7 @@ void QFaustItem::generateMath ()
  */
 void QFaustItem::generateLoopGraph ()
 {
-    QString cmd =  "faust2graphviewer " + dspFileQuoted();
+    QString cmd =  "faust2graphviewer " + dspFileQuotedSpecial();
     bool b = QProcess::startDetached(cmd);
     qDebug() << cmd;
     if (!b) {
@@ -418,7 +419,7 @@ void QFaustItem::generateLoopGraph ()
  */
 void QFaustItem::generateSigGraph ()
 {
-    QString cmd =  "faust2sigviewer " + dspFileQuoted();
+    QString cmd =  "faust2sigviewer " + dspFileQuotedSpecial();
     bool b = QProcess::startDetached(cmd);
     qDebug() << cmd;
     if (!b) {
@@ -587,9 +588,11 @@ bool QFaustItem::generateBinary()
 	
 	connect( mBuildProcess , SIGNAL( finished ( int , QProcess::ExitStatus ) ) , this , SLOT( buildFinished ( int , QProcess::ExitStatus ) ) );
 
-	mItemBuildCommand = interpretCommand( mBuildCommand );
+    qDebug() << "mItemBuildCommand[1] = " << mItemBuildCommand;
 
-    qDebug() << "mItemBuildCommand = " << mItemBuildCommand;
+    mItemBuildCommand = interpretCommand( mBuildCommand );
+
+    qDebug() << "mItemBuildCommand[2] = " << mItemBuildCommand;
 	
 	mBuildProcess->start( mItemBuildCommand );
 
@@ -898,7 +901,19 @@ QString QFaustItem::dspFile() const
 //------------------------------------------------------------
 QString QFaustItem::dspFileQuoted() const
 {
-	return "\"" + dspFile() + "\"";
+    return "\"" + dspFile() + "\"";
+}
+
+//------------------------------------------------------------
+// If file modified but not saved, uses tmp filename otherwise
+// uses real filename
+QString QFaustItem::dspFileQuotedSpecial() const
+{
+    if (isModified()) {
+        return "\"" + dspFile() + "\"";
+    } else {
+        return "\"" + file() + "\"";
+    }
 }
 
 //------------------------------------------------------------
@@ -1159,8 +1174,8 @@ QString QFaustItem::interpretCommand(const QString& command) const
     result = command;
     result.replace( DSP_FILE_KEYWORD ,	"\""+file()+"\"" );
 	result.replace( OPTIONS_KEYWORD , QFaustItem::mBuildOptions );
-	QFileInfo fileInfo( file() );
-	QString f = file().length() ? fileInfo.absolutePath() + fileInfo.completeBaseName() : "untitled";
+    //QFileInfo fileInfo( file() );
+    //QString f = file().length() ? fileInfo.absolutePath() + fileInfo.completeBaseName() : "untitled";
 
 	return result;
 }

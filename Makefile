@@ -5,7 +5,7 @@ qm := $(if $(qm4),$(qm4),qmake)
 
 # for osx
 DISTRIB=FaustWorks
-version="12.04"
+version="0.4"
 
 ifeq ($(system), Darwin)
 	SPEC := -spec macx-llvm

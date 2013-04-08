@@ -4,10 +4,10 @@
 #                                                                   #
 #               Build FaustWorks for MacOSX                  		#
 #               with an embedded version of Faust                   #
-#               (c) Grame, 2010                                     #
+#               (c) Grame, 2010,2011,2012,2013                      #
 #                                                                   #
 #####################################################################
-VERSION="0.3.1"
+VERSION="0.4"
 
 DISTRIB="FaustWorks-$VERSION"
 

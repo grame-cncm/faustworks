@@ -14,10 +14,6 @@ DISTRIB="FaustWorks-$VERSION"
 DST="FaustWorks.app/Contents/"
 
 
-# copy the scripts
-cp -rf scripts.osx $DST
-
-
 # then create the dmg package with the QT libraries
 macdeployqt FaustWorks.app/
 

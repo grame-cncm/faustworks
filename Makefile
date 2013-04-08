@@ -60,6 +60,10 @@ clonedist :
 	rm -rf FaustWorks-$(version)
 
 
+# make a FaustWorks source distribution using git archive
+distribution :
+	git archive -o $(DISTRIB)-$(version).zip HEAD
+
 clean : Makefile.qt4
 	make -f Makefile.qt4 clean
 	rm -f FaustWorks.pro.user

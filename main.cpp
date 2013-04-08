@@ -25,6 +25,7 @@
 #include <QDebug>
 #include <QMainWindow>
 #include <QSplashScreen>
+#include <QTranslator>
 
 #include "FaustMainWindow.h"
 
@@ -35,6 +36,8 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 
 	Q_INIT_RESOURCE( application );
+    Q_INIT_RESOURCE( i18n );
+
     app.setWindowIcon(QIcon(":/FaustWorks.png"));
 
     QPixmap pixmap(":/FaustWorks.png");
@@ -42,6 +45,13 @@ int main(int argc, char *argv[])
     splash.show();
     app.processEvents();
 
+    QTranslator qtTranslator;
+    qtTranslator.load("qt_" + QLocale::system().name());
+    app.installTranslator(&qtTranslator);
+
+    QTranslator myappTranslator;
+    myappTranslator.load(":/translations/i18n_" + QLocale::system().name());
+    app.installTranslator(&myappTranslator);
 
 	QCoreApplication::setOrganizationName( "GRAME" );
     QCoreApplication::setApplicationName( "FaustWorks" );

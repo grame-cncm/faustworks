@@ -536,7 +536,7 @@ void QLanguageItem::reloadItem()
 	QMessageBox::StandardButton result = QMessageBox::Yes;
 	if ( mIsModified && !mIsProcessingFileChange )
 	{
-		result = QMessageBox::question ( 0, "Reload", "Unsaved modifications will be lost. Reload ?",
+        result = QMessageBox::question ( 0, tr("Reload"), tr("Unsaved modifications will be lost. Reload?"),
 			QMessageBox::Yes | QMessageBox::Cancel, QMessageBox::Cancel );
 	}
 	if ( result == QMessageBox::Yes )
@@ -578,7 +578,7 @@ void QLanguageItem::removeItemAndFile()
 		return;
 	}
 	
-	QMessageBox::StandardButton result = QMessageBox::question ( 0, "Delete file", "Remove item and file ?",
+    QMessageBox::StandardButton result = QMessageBox::question ( 0, tr("Delete file"), tr("Remove item and file ?"),
 			QMessageBox::Yes | QMessageBox::Cancel, QMessageBox::Cancel );
 
 	if ( result == QMessageBox::Yes )
@@ -633,34 +633,34 @@ QMenu * QLanguageItem::buildContextMenu()
 	
 	QList<QAction *> actions;
 
-	QAction * removeFileAct = new QAction( "Delete item && file" , menu );
+    QAction * removeFileAct = new QAction( tr("Delete item && file") , menu );
 	removeFileAct->setObjectName( OBJECT_NAME_DELETE_ITEM_AND_FILE_ACT );
 	connect( removeFileAct , SIGNAL(triggered()) , this , SLOT(removeItemAndFile()) );
 	actions.append(removeFileAct);		
 	removeFileAct->setEnabled( !mFile.isEmpty() );
 	removeFileAct->setProperty( FILE_MENU , 1 );
 
-	QAction * unlinkAct = new QAction( "Unlink" , menu );
+    QAction * unlinkAct = new QAction( tr("Unlink") , menu );
 	unlinkAct->setObjectName( OBJECT_NAME_UNLINK_ACT );
 	connect( unlinkAct , SIGNAL(triggered()) , this , SLOT(unlinkFile()) );
 	actions.append(unlinkAct);
 	unlinkAct->setEnabled( !mFile.isEmpty() );
 	unlinkAct->setProperty( FILE_MENU , 1 );
 
-	QAction * reloadAct = new QAction( "Reload" , menu );
+    QAction * reloadAct = new QAction( tr("Reload") , menu );
 	reloadAct->setObjectName( OBJECT_NAME_RELOAD_ACT );
 	connect( reloadAct , SIGNAL(triggered()) , this , SLOT(reloadItem()) );
 	actions.append(reloadAct);
 	reloadAct->setEnabled( !mFile.isEmpty() );
 	reloadAct->setProperty( FILE_MENU , 1 );
 
-	QAction * saveItemAsAct = new QAction( "Save as..." , menu );
+    QAction * saveItemAsAct = new QAction( tr("Save as...") , menu );
 	saveItemAsAct->setObjectName( OBJECT_NAME_SAVE_AS_ACT );
 	connect( saveItemAsAct , SIGNAL(triggered()) , this , SIGNAL(saveItemAs()) );
 	actions.append(saveItemAsAct);
 	saveItemAsAct->setProperty( FILE_MENU , 1 );
 
-	QAction * saveItemAct = new QAction( "Save" , menu );
+    QAction * saveItemAct = new QAction( tr("Save") , menu );
 	saveItemAct->setObjectName( OBJECT_NAME_SAVE_ACT );
 	connect( saveItemAct , SIGNAL(triggered()) , this , SLOT(saveItem()) );
 	actions.append(saveItemAct);
@@ -682,16 +682,16 @@ QMenu * QLanguageItem::buildContextMenu()
 		}
 	}
 	
-	QMenu * zMenu = menu->addMenu("Z order");
+    QMenu * zMenu = menu->addMenu(tr("Z order"));
 	zMenu->setObjectName( OBJECT_NAME_Z_MENU );
 	
-	QAction * bringToFrontAct = zMenu->addAction( "Bring to front" );
+    QAction * bringToFrontAct = zMenu->addAction( tr("Bring to front") );
 	connect( bringToFrontAct , SIGNAL(triggered()) , this , SIGNAL(bringToFront()) );
-	QAction * bringForwardAct = zMenu->addAction( "Bring forward" );
+    QAction * bringForwardAct = zMenu->addAction( tr("Bring forward") );
 	connect( bringForwardAct , SIGNAL(triggered()) , this , SIGNAL(bringForward()) );
-	QAction * sendBackwardAct = zMenu->addAction( "Send backward" );
+    QAction * sendBackwardAct = zMenu->addAction( tr("Send backward") );
 	connect( sendBackwardAct , SIGNAL(triggered()) , this , SIGNAL(sendBackward()) );
-	QAction * sendToBackAct = zMenu->addAction( "Send to back" );
+    QAction * sendToBackAct = zMenu->addAction( tr("Send to back") );
 	connect( sendToBackAct , SIGNAL(triggered()) , this , SIGNAL(sendToBack()) );
 
 	foreach (QAction *a, actions)

@@ -265,7 +265,7 @@ void GraphicsSceneMainWindow::addItemFromFile()
 {
 	//Select a file
 	QString fileName = QFileDialog::getOpenFileName(
-		this, QString("Add a ") + LANGUAGE_NAME_LONG + QString(" file"),
+                this, tr("Add a %1 file").arg(LANGUAGE_NAME_LONG),
         getFileDialogPath(),
         tr( QString( GMN_FILE_FILTER  + QString("\nAll (*.*)") ).toAscii().data() ));
 
@@ -366,9 +366,7 @@ void GraphicsSceneMainWindow::cleanHistory()
 //-------------------------------------------------------------------------
 QString getZoomLabel(float zoom)
 {
-	QString label;
-	label.sprintf("Zoom: x%0.2f" , zoom );
-	return label;
+    return QString("Zoom: x%1").arg(zoom, 0, 'd', 2);
 }
 
 //-------------------------------------------------------------------------
@@ -458,9 +456,7 @@ void GraphicsSceneMainWindow::changeFontSize( float newFontPointSize )
 //-------------------------------------------------------------------------
 void GraphicsSceneMainWindow::sceneSelectionChanged()
 {
-	QString statusMsg;
-	QTextStream(&statusMsg) << selectedLanguageItems().size() << " item(s) selected";
-	statusBar()->showMessage( statusMsg );
+    statusBar()->showMessage(tr("%n item(s) selected", "", selectedLanguageItems().size()).arg(selectedLanguageItems().size()));
 	updateWindowState();
 }
 
@@ -531,7 +527,7 @@ void GraphicsSceneMainWindow::updateCode()
 
 		if ( mFirstSelectedItem->setCode( newGMNCode ) )
 		{
-            statusBar()->showMessage( LANGUAGE_NAME_SHORT + " Code OK" );
+            statusBar()->showMessage(tr("%1 Code OK").arg(LANGUAGE_NAME_SHORT));
 			addToHistory( mFirstSelectedItem );
 		}
 		else
@@ -748,7 +744,8 @@ void GraphicsSceneMainWindow::saveSceneAs()
 	QString filters =						GSC_FILE_FILTER;
 
 	QString selectedFilter("");
-	QString fileName = QFileDialog::getSaveFileName(this, "Save the " + LANGUAGE_NAME_SHORT + " scene",
+    QString fileName = QFileDialog::getSaveFileName(this,
+                            tr("Save the %1 scene").arg(LANGUAGE_NAME_SHORT),
                             savePath,
                             tr(filters.toAscii().data()) ,
 							&selectedFilter);
@@ -788,14 +785,15 @@ void GraphicsSceneMainWindow::loadScene()
 	QString openPath = windowFilePath();
 	if ( openPath == "" )
 		openPath = QDir::homePath();
-	QString fileName = QFileDialog::getOpenFileName(this, "Open a " + LANGUAGE_NAME_SHORT + " scene",
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                                    tr("Open a %1 scene").arg(LANGUAGE_NAME_SHORT),
                                                      openPath,
                                                      tr( GSC_FILE_FILTER.toAscii().data() ));
 	
 	if ( !fileName.isEmpty() )
 	if ( !loadSceneFile(fileName) )
 	{
-		QMessageBox::critical( 0 , "Load scene error" , fileName + " : Invalid GuidoScene file" );
+        QMessageBox::critical( 0 , tr("Load scene error") , tr("%1 : Invalid GuidoScene file").arg(fileName));
 	}
 }
 
@@ -924,8 +922,8 @@ void GraphicsSceneMainWindow::switchHistoryVisible()
 QString GraphicsSceneMainWindow::findFile(const QString& file)
 {
 	// demander de specifier l'endroit du fichier.
-	QString filter = QString( file  + QString("\nAll (*.*)") );
-	QString fileName = QFileDialog::getOpenFileName ( this, "Find file", file, filter );
+    QString filter = tr("%1\nAll (*.*)").arg(file);
+    QString fileName = QFileDialog::getOpenFileName ( this, tr("Find file"), file, filter );
 	return fileName;
 }
 
@@ -954,7 +952,9 @@ void GraphicsSceneMainWindow::fileChanged(bool isFileRemoved)
 		unselectAll();
 		languageItem->setSelected( true );
 
-		QMessageBox msgBox( QMessageBox::Warning, "File not found", "Can't find the " + mSettings.mLanguageNameShort + " item's file " + languageItem->file() );
+        QMessageBox msgBox( QMessageBox::Warning,
+                            tr("File not found"),
+                            tr("Can't find the %1 item's file %2").arg(mSettings.mLanguageNameShort).arg(languageItem->file()));
         QPushButton *findButton = msgBox.addButton(tr("Find file..."), QMessageBox::ActionRole);
 		QPushButton *removeButton = msgBox.addButton(tr("Remove item"), QMessageBox::ActionRole);
         msgBox.addButton(QMessageBox::Ignore);
@@ -1138,9 +1138,9 @@ void GraphicsSceneMainWindow::readSettings()
 		{
 			QString msg;
 			if ( currentScene.size() != 0 )
-				msg = "Can't load the scene " + currentScene + ". ";
-			msg += "Choose the path of your new 'workspace' scene.";
-			QMessageBox::warning(this , "Workspace scene", msg);
+                msg = tr("Can't load the scene %1. ").arg(currentScene);
+            msg += tr("Choose the path of your new 'workspace' scene.");
+            QMessageBox::warning(this , tr("Workspace scene"), msg);
 			saveSceneAs();
 		}
 	}
@@ -2018,7 +2018,7 @@ void GraphicsSceneMainWindow::setupNAddItem(QLanguageItem* languageItem)
 
 	if ( languageItem->isValid() )
 	{
-		statusBar()->showMessage( GraphicsSceneMainWindow::mSettings.mLanguageName + " Code Ok" );
+        statusBar()->showMessage( tr("%1 Code Ok").arg(GraphicsSceneMainWindow::mSettings.mLanguageName) );
 		addToHistory( languageItem );
 	}
 	else
@@ -2109,11 +2109,11 @@ bool GraphicsSceneMainWindow::saveItemModificationsDialog(QLanguageItem * item)
 		item->setSelected( true );
 
 		QString dialogText = ( fileExists ) ?
-				item->file() + " has changed. Save modifications ?"
-			:	item->file() + " doesn't exist. Re-save item ?"
+                    tr("%1 has changed. Save modifications ?").arg(item->file())
+                  :	tr("%1 doesn't exist. Re-save item ?").arg(item->file())
 			;
 		QMessageBox::StandardButton result = QMessageBox::warning ( this, 
-				"Save item", 
+                tr("Save item"),
 				dialogText, 
 				QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel , 
 				QMessageBox::Yes ); 
@@ -2148,7 +2148,8 @@ void GraphicsSceneMainWindow::saveItemAs(QLanguageItem * languageItem)
 	QString filters =						GMN_FILE_FILTER;
 
 	QString selectedFilter("");
-	QString fileName = QFileDialog::getSaveFileName(this, "Save the " + LANGUAGE_NAME_SHORT + " item",
+    QString fileName = QFileDialog::getSaveFileName(this,
+                            tr("Save the %1 item").arg(LANGUAGE_NAME_SHORT),
                             savePath,
                             tr(filters.toAscii().data()) ,
 							&selectedFilter);

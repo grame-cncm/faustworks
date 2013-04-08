@@ -89,7 +89,7 @@ FaustMainWindow::FaustMainWindow()
 	mCPPTextEdit->setLineWrapMode(QTextEdit::NoWrap);
     mCPPTextEdit->setFontFamily( FONT_FAMILY );
 
-	mCPPTextEditDock = new QDockWidget("C++ code" , this);
+    mCPPTextEditDock = new QDockWidget(tr("C++ code") , this);
 	mCPPTextEditDock->setWidget( mCPPTextEdit );
 	mCPPTextEditDock->setFeatures( QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetFloatable );
 	mCPPTextEditDock->setObjectName("CPPTextEditDock");
@@ -105,7 +105,7 @@ FaustMainWindow::FaustMainWindow()
         gErrorWindow->hide();
         //gErrorWindow->setWindowTitle("Invalid Faust Code");
 
-        mErrorDock = new QDockWidget("Error Messages" , this);
+        mErrorDock = new QDockWidget(tr("Error Messages") , this);
         mErrorDock->setWidget( gErrorWindow );
         mErrorDock->setFeatures( QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable | QDockWidget::DockWidgetFloatable );
         mErrorDock->setObjectName("ErrorDockObject");
@@ -271,8 +271,8 @@ void FaustMainWindow::droppedFileTypeChanged(int droppedFileTypeIndex)
 //-------------------------------------------------------------------------
 void FaustMainWindow::itemLaunchScriptError(const QString& command)
 {
-	QMessageBox::warning( 0 , "Binary build error" , 
-        "Couldn't launch command " + command + "!" );
+    QMessageBox::warning( 0 , tr("Binary build error") ,
+                          tr("Couldn't launch command %1!").arg(command));
 }
 
 //-------------------------------------------------------------------------
@@ -283,31 +283,31 @@ void FaustMainWindow::itemBuildError(int errorType , const QString& msg)
 	{
 		case QFaustItem::SCRIPT_ERROR	:
 		{
-			statusMsg = "Script error : " + msg;
+            statusMsg = tr("Script error : ") + msg;
 			break;
 		}
 		case QFaustItem::SCRIPT_CRASHED	:
 		{
-			statusMsg = "Script crashed";
+            statusMsg = tr("Script crashed");
 			if ( msg.length() )
 				statusMsg += (" : " + msg);
 			break;
 		}
 		case QFaustItem::SCRIPT_NO_FILE	:
 		{
-			statusMsg = "Script : no output file specified";
+            statusMsg = tr("Script : no output file specified");
 			break;
 		}
 		case QFaustItem::SCRIPT_FILE_NOT_FOUND	:
 		{
-			statusMsg = "Script : output file(s) " + msg + " not found.";
+        statusMsg = tr("Script : output file(s) %1 not found.").arg(msg);
 			break;
 		}
 	}
 	//statusBar()->showMessage( statusMsg );
 //	qDebug() << "FaustMainWindow::itemBuildError : " << statusMsg;
 
-	QMessageBox::warning( 0 , "Binary build error" , 
+    QMessageBox::warning( 0 , tr("Binary build error") ,
 		statusMsg );
 
 }
@@ -447,10 +447,10 @@ void FaustMainWindow::readPreferencesSettings()
 	p.close();
 	if ( p.error() == QProcess::FailedToStart )
 	{
-		QMessageBox::warning( 0 , "Faust not found" , 
-        "Couldn't launch " + faustAbsolutePath + ".\n"
-		+ "The file may not exist, or you may not have the rights to execute it. \n"
-		+ "You must define a valid faust executable in the Application Preferences." );
+        QMessageBox::warning( 0 , tr("Faust not found") ,
+        tr("Couldn't launch %1.\n"
+           "The file may not exist, or you may not have the rights to execute it.\n"
+           "You must define a valid faust executable in the Application Preferences.").arg(faustAbsolutePath) );
 	}
 	
 	//Update combobox
@@ -534,14 +534,14 @@ void FaustMainWindow::createToolBars()
 	mBuildToolBar->addWidget( mDropTypeComboBox );
 */
 	mTargetsComboBox = new QComboBox( this );
-	mTargetsComboBox->setToolTip("Target architecture");
-	mTargetsComboBox->setStatusTip("Choose the exported plug-in architecture");
+    mTargetsComboBox->setToolTip(tr("Target architecture"));
+    mTargetsComboBox->setStatusTip(tr("Choose the exported plug-in architecture"));
 	connect( mTargetsComboBox , SIGNAL(currentIndexChanged(int)) , this , SLOT(targetArchitectureChanged(int)) );
 	mBuildToolBar->addWidget( mTargetsComboBox );
 	
 	mOptionsComboBox = new QComboBox( this );
-	mOptionsComboBox->setToolTip("Build options");
-	mOptionsComboBox->setStatusTip("Build options used for $OPTIONS by binary build scripts");
+    mOptionsComboBox->setToolTip(tr("Build options"));
+    mOptionsComboBox->setStatusTip(tr("Build options used for $OPTIONS by binary build scripts"));
 	connect( mOptionsComboBox , SIGNAL(currentIndexChanged(int)) , this , SLOT(buildOptionsChanged(int)) );
 	mBuildToolBar->addWidget( mOptionsComboBox );
 }

@@ -9,4 +9,5 @@ FaustWorks
 *.dmg
 Makefile.qt4
 FaustWorks.pro.user
-
+FaustWorks.xcodeproj
+*.qm

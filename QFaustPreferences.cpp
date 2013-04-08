@@ -189,13 +189,13 @@ void QFaustPreferences::addConfigurationLine(
 	
 	QSizePolicy p;
 	
-	QLabel * targetNameLabel	= new QLabel("Name :" , target);
+    QLabel * targetNameLabel	= new QLabel(tr("Name :") , target);
     QLineEdit * targetNameEdit	= new QLineEdit(targetName , target);
 	targetNameEdit->setObjectName( nameEditName );
 	p = targetNameEdit->sizePolicy();
 	p.setHorizontalStretch( 1 );
 	targetNameEdit->setSizePolicy( p );
-	QLabel * targetCommandLabel = new QLabel("Command :" , target);
+    QLabel * targetCommandLabel = new QLabel(tr("Command :") , target);
     QLineEdit *targetCommandEdit= new QLineEdit(targetCommand , target);
 	targetCommandEdit->setObjectName( commandEditName );
 	p = targetCommandEdit->sizePolicy();
@@ -203,7 +203,7 @@ void QFaustPreferences::addConfigurationLine(
 	targetCommandEdit->setSizePolicy( p );
 	
 	QToolButton * removeTargetButton = new QToolButton( target );
-	removeTargetButton->setText( "Remove" );
+    removeTargetButton->setText( tr("Remove") );
 
 	QHBoxLayout *layout = new QHBoxLayout;
 	layout->addWidget(targetNameLabel);

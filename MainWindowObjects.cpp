@@ -150,7 +150,7 @@ QHistoryGraphicsView::QHistoryGraphicsView(QGraphicsScene * s , QLanguageItemFac
 {
 	setFixedWidth( HISTORY_WIDTH );
 	setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
-	setStatusTip ( "Keep trace of all items added to the scene" );
+    setStatusTip ( "Keep trace of all items added to the scene" );
 }
 
 //------------------------------------------------------------------------------------------------------------------------
@@ -231,7 +231,7 @@ QStorageGraphicsView::QStorageGraphicsView( QGraphicsScene * s , GraphicsSceneMa
 	setAcceptDrops(true);
 	setDragMode(QGraphicsView::RubberBandDrag);
 	mMainWindow = mainWindow;
-	setStatusTip ( "Drag&drop an item to store it in the Storage Zone" );
+    setStatusTip ( tr("Drag&drop an item to store it in the Storage Zone") );
 	
 	connect( s , SIGNAL( changed(const QList<QRectF> &) ) , this , SLOT( sceneChanged(const QList<QRectF> &) ) );
 }

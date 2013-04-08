@@ -47,5 +47,17 @@ SOURCES += CPPHighlighter.cpp \
            QLanguageItem.cpp \
            QPaletteItem.cpp \
            QResolutionDialog.cpp
-RESOURCES += Resources/application.qrc Resources/faust.qrc
+RESOURCES += Resources/application.qrc Resources/faust.qrc Resources/i18n.qrc
 OTHER_FILES += Resources/FaustWorks.rc
+
+TRANSLATIONS += Resources/translations/i18n_ru.ts
+
+i18n_qm.commands = lrelease FaustWorks.pro
+QMAKE_EXTRA_TARGETS += i18n_qm
+
+PRE_TARGETDEPS += i18n_qm
+
+
+
+
+

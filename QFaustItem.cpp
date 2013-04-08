@@ -470,14 +470,14 @@ bool QFaustItem::generateSVG()
         //gErrorWindow->setWindowTitle("Invalid Faust Code");
     }
     if (faustProcess.exitCode()) {
-        gErrorWindow->setWindowTitle("Invalid Faust Code");
+        gErrorWindow->setWindowTitle(tr("Invalid Faust Code"));
         gErrorWindow->show();
         gErrorWindow->append(QString(faustProcess.readAllStandardError()));
         gErrorWindow->append("--------------------\n");
         qDebug() << "des erreurs";
         //qDebug() << faustProcess.readAllStandardError();
     } else {
-        gErrorWindow->setWindowTitle("Faust Code OK");
+        gErrorWindow->setWindowTitle(tr("Faust Code OK"));
     }
 
     return true;
@@ -1266,15 +1266,15 @@ QMenu* QFaustItem::buildContextMenu()
 {
     QMenu * m = new QMenu();
 
-    m->addAction( "Save", this , SLOT(saveItem()) );
-    m->addAction( "Save as...", this , SIGNAL(saveItemAs()) );
+    m->addAction( tr("Save"), this , SLOT(saveItem()) );
+    m->addAction( tr("Save as..."), this , SIGNAL(saveItemAs()) );
     //m->addAction( "Show Faust code", this , SIGNAL(showFaustCode()) );
     //m->addAction( "Show C++ code", this , SIGNAL(showCppCode()) );
-    m->addAction( "Browse Diagram", this , SLOT(exploreSVG()) );
-    m->addAction( "Generate Math", this , SLOT(generateMath()) );
-    m->addAction( "Generate Loop Graph", this , SLOT(generateLoopGraph()) );
-    m->addAction( "Generate Signal Graph", this , SLOT(generateSigGraph()) );
-    m->addAction( "Run Binary",     this , SLOT(runBinary()), QKeySequence(Qt::CTRL + Qt::Key_R) );
+    m->addAction( tr("Browse Diagram"), this , SLOT(exploreSVG()) );
+    m->addAction( tr("Generate Math"), this , SLOT(generateMath()) );
+    m->addAction( tr("Generate Loop Graph"), this , SLOT(generateLoopGraph()) );
+    m->addAction( tr("Generate Signal Graph"), this , SLOT(generateSigGraph()) );
+    m->addAction( tr("Run Binary"),     this , SLOT(runBinary()), QKeySequence(Qt::CTRL + Qt::Key_R) );
 
     return m;
 }

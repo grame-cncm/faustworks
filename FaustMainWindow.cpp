@@ -116,6 +116,7 @@ FaustMainWindow::FaustMainWindow()
 	init();
 	
     new FaustHighlighter( mLanguageTextEdit->document() ); // note : we need it, but we don't have to store the highlighter
+    mLanguageTextEdit->selectAll();
     mLanguageTextEdit->setFontFamily( FONT_FAMILY );
 
 	new CPPHighlighter( mCPPTextEdit->document() );
@@ -141,7 +142,8 @@ FaustMainWindow::FaustMainWindow()
 	paletteItem->setPositioningPolicy(QPaletteItem::CENTER_POLICY);
 }
 
-#define NO_OPTIONS "No options"
+//#define NO_OPTIONS "No options"
+#define NO_OPTIONS "Scalar"
 //-----------------------------------------------------------------------
 void FaustMainWindow::reinitSettings()
 {
@@ -149,7 +151,7 @@ void FaustMainWindow::reinitSettings()
 
 	reinitPreferencesSettings();
 	
-	QSettings settings;
+    QSettings settings("grame.fr", "FaustWorks");
 	settings.setValue( CURRENT_TARGET_ARCHITECTURE_SETTING , "" );
 	settings.setValue( CURRENT_BUILD_OPTION_SETTING , NO_OPTIONS );
 }
@@ -246,7 +248,7 @@ void FaustMainWindow::updateCode()
 //-------------------------------------------------------------------------
 void FaustMainWindow::targetArchitectureChanged(int index)
 {
-	QSettings settings;
+    QSettings settings("grame.fr", "FaustWorks");
 	settings.setValue( CURRENT_TARGET_ARCHITECTURE_SETTING , mTargetsComboBox->currentText() );
 	setBuildCommand( mTargetsComboBox->itemData( index ).toString() );
 }
@@ -254,7 +256,7 @@ void FaustMainWindow::targetArchitectureChanged(int index)
 //-------------------------------------------------------------------------
 void FaustMainWindow::buildOptionsChanged(int index)
 {
-	QSettings settings;
+    QSettings settings("grame.fr", "FaustWorks");
 	settings.setValue( CURRENT_BUILD_OPTION_SETTING , mOptionsComboBox->currentText() );
 	setBuildOptions( mOptionsComboBox->itemData( index ).toString() );
 	updateCode();
@@ -415,7 +417,7 @@ void FaustMainWindow::readSettings()
 	//faust executable path & build commands must have been set before.
 	GraphicsSceneMainWindow::readSettings();
 
-	QSettings settings;
+    QSettings settings("grame.fr", "FaustWorks");
 	//Update changed values
 	
 	//Update text edits.
@@ -432,7 +434,7 @@ QString makeAbsolutePath(const QString& path)
 //-------------------------------------------------------------------------
 void FaustMainWindow::readPreferencesSettings()
 {
-	QSettings settings;
+    QSettings settings("grame.fr", "FaustWorks");
 
     QString faustAbsolutePath = makeAbsolutePath(settings.value(FAUST_PATH_SETTING).toString());
     qDebug() << "faustAbsolutePath : " << faustAbsolutePath;
@@ -465,7 +467,7 @@ void FaustMainWindow::updateBuildComboBox( QComboBox * comboBox , const char * i
 	disconnect( comboBox , SIGNAL(currentIndexChanged(int)) , this , indexChangedSlot );
 	comboBox->clear();
 	
-	QSettings settings;
+    QSettings settings("grame.fr", "FaustWorks");
 	settings.beginGroup(settingsKey);
 	QStringList keys = settings.allKeys();
 	for ( int i = 0 ; i < keys.size() ; i++ )

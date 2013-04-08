@@ -79,7 +79,7 @@ void QFaustPreferences::findFaustPath()
 //-------------------------------------------------------------------------
 void QFaustPreferences::apply()	
 {
-	QSettings settings;
+    QSettings settings("grame.fr", "FaustWorks");
 	settings.setValue( FAUST_PATH_SETTING , mUI->faustPathEdit->text() );
 	
 	applyConfiguration( TARGETS_SETTING , TARGET_WIDGET , TARGET_NAME , TARGET_COMMAND , mUI->targetsBox );
@@ -121,7 +121,7 @@ void QFaustPreferences::addOption()
 //-------------------------------------------------------------------------
 void QFaustPreferences::applyConfiguration( const QString& settingKey , const QString& widgetName , const QString& nameEditName , const QString& commandEditName , QWidget * box )
 {
-	QSettings settings;
+    QSettings settings("grame.fr", "FaustWorks");
 	
 	settings.remove( settingKey );
 	QList<QWidget*> targetWidgets = qFindChildren<QWidget*>( box , widgetName );
@@ -138,7 +138,7 @@ void QFaustPreferences::applyConfiguration( const QString& settingKey , const QS
 //-------------------------------------------------------------------------
 void QFaustPreferences::updateWidgets()
 {
-	QSettings settings;
+    QSettings settings("grame.fr", "FaustWorks");
 	mUI->faustPathEdit->setText( settings.value( FAUST_PATH_SETTING ).toString() );
 	
 	updateConfigurationWidgets( TARGETS_SETTING , TARGET_WIDGET , TARGET_NAME , TARGET_COMMAND , mUI->targetsBox );
@@ -156,7 +156,7 @@ void QFaustPreferences::updateTabOrder()
 void QFaustPreferences::updateConfigurationWidgets( 
 	const QString& settingKey , const QString& widgetName , const QString& nameEditName , const QString& commandEditName , QWidget * parent )
 {
-	QSettings settings;
+    QSettings settings("grame.fr", "FaustWorks");
 
 	//Clear targets
 	QList<QWidget*> targetWidgets = qFindChildren<QWidget*>( parent , widgetName );
@@ -285,7 +285,7 @@ void QFaustPreferences::saveSettings()
 {
 	mSavedSettings.clear();
 	
-	QSettings settings;
+    QSettings settings("grame.fr", "FaustWorks");
 	
 	QStringList keys = settings.allKeys();
 	for ( int i = 0 ; i < keys.size() ; i++ )
@@ -297,7 +297,7 @@ void QFaustPreferences::saveSettings()
 //-------------------------------------------------------------------------
 void QFaustPreferences::restoreSettings()
 {
-	QSettings settings;
+    QSettings settings("grame.fr", "FaustWorks");
 	settings.clear();
 	
 	QStringList keys = mSavedSettings.keys();

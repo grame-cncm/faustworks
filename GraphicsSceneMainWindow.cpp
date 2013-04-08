@@ -194,7 +194,7 @@ GraphicsSceneMainWindow::~GraphicsSceneMainWindow()
 //-------------------------------------------------------------------------
 void GraphicsSceneMainWindow::reinitSettings()
 {	 
-	QSettings settings;
+    QSettings settings("grame.fr", "FaustWorks");
 
 	settings.setValue( INIT_DONE_SETTING , true );
 
@@ -211,7 +211,7 @@ void GraphicsSceneMainWindow::reinitSettings()
 //-------------------------------------------------------------------------
 void GraphicsSceneMainWindow::writeSettings()
 {
-	QSettings settings;
+    QSettings settings("grame.fr", "FaustWorks");
 	settings.setValue( WINDOW_POS_SETTING , pos() );
 	settings.setValue( WINDOW_SIZE_SETTING, size() );
 	settings.setValue( WINDOW_STATE_SETTING, saveState() );
@@ -451,7 +451,7 @@ void GraphicsSceneMainWindow::reloadTextEdits()
 void GraphicsSceneMainWindow::changeFontSize( float newFontPointSize )
 {
 	mLanguageTextEdit->setFontPointSize( newFontPointSize );
-	QSettings().setValue( FONT_SIZE_SETTING , mLanguageTextEdit->fontPointSize() );
+    QSettings("grame.fr", "FaustWorks").setValue( FONT_SIZE_SETTING , mLanguageTextEdit->fontPointSize() );
 	reloadTextEdits();
 }
 
@@ -1084,7 +1084,7 @@ void GraphicsSceneMainWindow::sendToBack()
 //-----------------------------------------------------------------------
 void GraphicsSceneMainWindow::checkSettings()
 {	
-	QSettings settings;
+    QSettings settings("grame.fr", "FaustWorks");
 	if ( !settings.value( INIT_DONE_SETTING ).toBool() )
 	{
 		reinitSettings();
@@ -1102,7 +1102,7 @@ void GraphicsSceneMainWindow::readSettings()
 {
 	readPreferencesSettings();
 
-	QSettings settings;
+    QSettings settings("grame.fr", "FaustWorks");
 
 //	Font size for QTextEdits
 	changeFontSize( settings.value( FONT_SIZE_SETTING ).toDouble() );
@@ -1153,7 +1153,7 @@ void GraphicsSceneMainWindow::readSettings()
 //-------------------------------------------------------------------------
 void GraphicsSceneMainWindow::readPreferencesSettings()
 {
-	QSettings settings;
+    QSettings settings("grame.fr", "FaustWorks");
 
 //	Workspace mode on/off
 //	mIsWorkspaceModeOn = settings.value( WORKSPACE_MODE_SETTING ).toBool();
@@ -1697,7 +1697,7 @@ void GraphicsSceneMainWindow::saveSceneFile(const QString& fileName)
 	}
 	file.close();
 
-	QSettings().setValue( CURRENT_SCENE_SETTING, fileName );
+    QSettings("grame.fr", "FaustWorks").setValue( CURRENT_SCENE_SETTING, fileName );
 }
 
 //-------------------------------------------------------------------------
@@ -1814,7 +1814,7 @@ bool GraphicsSceneMainWindow::loadSceneFile(const QString& fileName)
 	}
 				
 	setWindowFilePath(fileName);
-	QSettings().setValue( CURRENT_SCENE_SETTING , fileName );
+    QSettings("grame.fr", "FaustWorks").setValue( CURRENT_SCENE_SETTING , fileName );
 	updateWindowState();
 	updateZoomLabel();
 	mSceneHasChanged = false;
@@ -2397,7 +2397,7 @@ void GraphicsSceneMainWindow::closeEvent(QCloseEvent *event)
 	{
 		if ( mIsWorkspaceModeOn )
 		{
-			QString currentScene = QSettings().value( CURRENT_SCENE_SETTING ).toString();
+            QString currentScene = QSettings("grame.fr", "FaustWorks").value( CURRENT_SCENE_SETTING ).toString();
 /*
 		int version = 1;
 		while ( QFile::exists( currentScene + "_V" + QVariant(version).toString() ) )

@@ -3,9 +3,10 @@ qm4 := $(shell which qmake-qt4)
 qm := $(if $(qm4),$(qm4),qmake)
 
 
-# for osx
-DISTRIB=FaustWorks
-version="0.4"
+
+VERSION="0.4"
+DISTRIB=FaustWorks-$(VERSION)
+TMPDIR=$(DISTRIB)-Distribution
 
 ifeq ($(system), Darwin)
 	SPEC := -spec macx-llvm
@@ -43,12 +44,13 @@ install-Darwin :
 dmg : $(DISTRIB).dmg
 
 $(DISTRIB).dmg : all
-	macdeployqt FaustWorks.app/
-	rm -rf $(DISTRIB)
+	rm -rf $(TMPDIR)
+	mkdir $(TMPDIR)
+	cp -r FaustWorks.app $(TMPDIR)
+	macdeployqt $(TMPDIR)/FaustWorks.app/
 	rm -rf $(DISTRIB).dmg
-	mkdir $(DISTRIB)
-	cp -r FaustWorks.app $(DISTRIB)
-	hdiutil create $(DISTRIB).dmg -srcfolder $(DISTRIB)
+	hdiutil create $(DISTRIB).dmg -srcfolder $(TMPDIR)
+	rm -rf $(TMPDIR)
 
 
 # make a FaustWorks distribution by cloning the git repository
@@ -62,11 +64,14 @@ clonedist :
 
 # make a FaustWorks source distribution using git archive
 distribution :
-	git archive -o $(DISTRIB)-$(version).zip HEAD
+	git archive -o $(DISTRIB).zip HEAD
 
 clean : Makefile.qt4
 	make -f Makefile.qt4 clean
 	rm -f FaustWorks.pro.user
+	rm -rf FaustWorks.app
+	rm -f $(DISTRIB).dmg
+	rm -f $(DISTRIB).zip
 
 Makefile.qt4: 
 	$(qm) $(SPEC) -o Makefile.qt4

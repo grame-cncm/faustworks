@@ -48,7 +48,7 @@
     #define DIR_SEP                 "\\"
 	#define FONT_FAMILY				"Monospace"
 #elif defined __APPLE__
-    #define DEFAULT_FAUST_PATH		"/usr/local/bin/faust"
+    #define DEFAULT_FAUST_PATH		"faust"
     #define DIR_SEP                 "/"
 	#define FONT_FAMILY				"Courier"
 #elif defined linux

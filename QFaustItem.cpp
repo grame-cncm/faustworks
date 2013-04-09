@@ -387,8 +387,9 @@ void QFaustItem::exploreSVG ()
  */
 void QFaustItem::generateMath ()
 {
+    QProcess qproc;
     QString cmd =  "faust2mathviewer " + dspFileQuotedSpecial();
-    bool b = QProcess::startDetached(cmd);
+    bool b = qproc.startDetached(cmd);
     qDebug() << cmd;
     if (!b) {
             qDebug() << "ERROR : Can't generate math doc " ;
@@ -403,8 +404,9 @@ void QFaustItem::generateMath ()
  */
 void QFaustItem::generateLoopGraph ()
 {
+    QProcess qproc;
     QString cmd =  "faust2graphviewer " + dspFileQuotedSpecial();
-    bool b = QProcess::startDetached(cmd);
+    bool b = qproc.startDetached(cmd);
     qDebug() << cmd;
     if (!b) {
             qDebug() << "ERROR : Can't generate DAG view " ;
@@ -419,8 +421,9 @@ void QFaustItem::generateLoopGraph ()
  */
 void QFaustItem::generateSigGraph ()
 {
+    QProcess qproc;
     QString cmd =  "faust2sigviewer " + dspFileQuotedSpecial();
-    bool b = QProcess::startDetached(cmd);
+    bool b = qproc.startDetached(cmd);
     qDebug() << cmd;
     if (!b) {
             qDebug() << "ERROR : Can't generate signal graph view " ;
@@ -511,7 +514,6 @@ static QString getFileContent(const QString& fileName)
 bool QFaustItem::generateCPP()
 {
 	QProcess faustProcess;
-	
 	mItemBuildOptions = QFaustItem::mBuildOptions;
 	faustProcess.start( mFaustPath + " -o " + cppFileQuoted() + " " + QFaustItem::mBuildOptions + " " + dspFileQuoted() );
 
@@ -582,10 +584,6 @@ bool QFaustItem::generateBinary()
 	cleanBinaries();
 	mIsBinaryReady = false;
 	mBuildProcess = new QProcess();
-    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-    env.insert("FAUST", mFaustPath);
-    mBuildProcess->setProcessEnvironment(env);
-	
 	connect( mBuildProcess , SIGNAL( finished ( int , QProcess::ExitStatus ) ) , this , SLOT( buildFinished ( int , QProcess::ExitStatus ) ) );
 
     qDebug() << "mItemBuildCommand[1] = " << mItemBuildCommand;

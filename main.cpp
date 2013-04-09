@@ -27,6 +27,7 @@
 #include <QSplashScreen>
 #include <QTranslator>
 
+
 #include "FaustMainWindow.h"
 
 QMainWindow* gMainWin;
@@ -37,6 +38,10 @@ int main(int argc, char *argv[])
 
 	Q_INIT_RESOURCE( application );
     Q_INIT_RESOURCE( i18n );
+
+    // prepare the PATH environment variable to be sure all scripts will be found
+    qputenv("PATH", qgetenv("PATH")+":/usr/local/bin:/opt/local/bin");
+    qDebug() << "PATH is " << qgetenv("PATH");
 
     app.setWindowIcon(QIcon(":/FaustWorks.png"));
 

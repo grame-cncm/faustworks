@@ -38,7 +38,7 @@ uninstall-Linux :
 	rm -f $(PREFIX)/share/icons/hicolor/scalable/apps/faustworks.svg
 
 install-Darwin :
-
+	cp -r FaustWorks.app /Applications
 
 dmg : $(DISTRIB).dmg
 

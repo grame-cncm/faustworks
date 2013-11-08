@@ -9,7 +9,7 @@ DISTRIB=FaustWorks-$(VERSION)
 TMPDIR=$(DISTRIB)-Distribution
 
 ifeq ($(system), Darwin)
-	SPEC := -spec macx-llvm
+	SPEC := -spec macx-g++
 	DST  := "FaustWorks.app/Contents/"
 
 else

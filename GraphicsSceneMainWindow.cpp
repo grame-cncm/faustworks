@@ -37,6 +37,17 @@
 #include <QDomElement>
 #include <QDomText>
 #include <QGraphicsRectItem>
+#include <QFileDialog>
+#include <QString>
+#include <QStatusBar>
+#include <QApplication>
+#include <QDockWidget>
+#include <QScrollBar>
+#include <QPushButton>
+#include <QMenuBar>
+#include <QToolBar>
+
+
 
 #define LANGUAGE_NAME_SHORT		GraphicsSceneMainWindow::applicationSettings().mLanguageNameShort
 #define LANGUAGE_NAME_LONG		GraphicsSceneMainWindow::applicationSettings().mLanguageNameLong
@@ -264,10 +275,11 @@ void GraphicsSceneMainWindow::addItem()
 void GraphicsSceneMainWindow::addItemFromFile()
 {
 	//Select a file
+    QString toto = QString( GMN_FILE_FILTER  + QString("\nAll (*.*)") ).toLatin1();
 	QString fileName = QFileDialog::getOpenFileName(
                 this, tr("Add a %1 file").arg(LANGUAGE_NAME_LONG),
         getFileDialogPath(),
-        tr( QString( GMN_FILE_FILTER  + QString("\nAll (*.*)") ).toAscii().data() ));
+        tr(QString( GMN_FILE_FILTER  + QString("\nAll (*.*)") ).toLatin1().data()));
 
 	// Create the item with the file
 	QLanguageItem* createdItem = 0;
@@ -747,7 +759,7 @@ void GraphicsSceneMainWindow::saveSceneAs()
     QString fileName = QFileDialog::getSaveFileName(this,
                             tr("Save the %1 scene").arg(LANGUAGE_NAME_SHORT),
                             savePath,
-                            tr(filters.toAscii().data()) ,
+                            tr(filters.toLatin1().data()) ,
 							&selectedFilter);
 
 	if ( fileName.isEmpty() )
@@ -788,7 +800,7 @@ void GraphicsSceneMainWindow::loadScene()
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open a %1 scene").arg(LANGUAGE_NAME_SHORT),
                                                      openPath,
-                                                     tr( GSC_FILE_FILTER.toAscii().data() ));
+                                                     tr( GSC_FILE_FILTER.toLatin1().data() ));
 	
 	if ( !fileName.isEmpty() )
 	if ( !loadSceneFile(fileName) )
@@ -956,7 +968,7 @@ void GraphicsSceneMainWindow::fileChanged(bool isFileRemoved)
                             tr("File not found"),
                             tr("Can't find the %1 item's file %2").arg(mSettings.mLanguageNameShort).arg(languageItem->file()));
         QPushButton *findButton = msgBox.addButton(tr("Find file..."), QMessageBox::ActionRole);
-		QPushButton *removeButton = msgBox.addButton(tr("Remove item"), QMessageBox::ActionRole);
+        QPushButton *removeButton = msgBox.addButton(tr("Remove item"), QMessageBox::ActionRole);
         msgBox.addButton(QMessageBox::Ignore);
         msgBox.exec();
 
@@ -2151,7 +2163,7 @@ void GraphicsSceneMainWindow::saveItemAs(QLanguageItem * languageItem)
     QString fileName = QFileDialog::getSaveFileName(this,
                             tr("Save the %1 item").arg(LANGUAGE_NAME_SHORT),
                             savePath,
-                            tr(filters.toAscii().data()) ,
+                            tr(filters.toLatin1().data()) ,
 							&selectedFilter);
 
 	if ( fileName.isEmpty() )

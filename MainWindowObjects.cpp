@@ -176,7 +176,8 @@ void QHistoryGraphicsView::addItem( QLanguageItem * container )
 	float heightScaleFactor = ( 1.5f * this->width() - HISTORY_ITEM_MARGIN ) / container->sceneBoundingRect().height();
 	float scaleFactor = MIN(widthScaleFactor,heightScaleFactor);
 	scaleFactor = MIN( MIN(scaleFactor,1.0f/container->transform().m11()) , MIN(scaleFactor,1.0f/container->transform().m22()) );
-	container->scale( scaleFactor , scaleFactor );
+    //container->scale( scaleFactor , scaleFactor );
+    container->setTransform(QTransform::fromScale(scaleFactor, scaleFactor), true);
 
 	//Add the item to the scene, and to the list of all items.
 	scene()->addItem( container );
@@ -247,8 +248,8 @@ void QStorageGraphicsView::addItem( QLanguageItem * container )
 	QRectF rect = container->sceneBoundingRect();
 	float scaleFactor = MIN( float(STORAGE_ITEM_WIDTH) / rect.width() , float(STORAGE_ITEM_HEIGHT) / rect.height() );
 	scaleFactor = MIN( MIN(scaleFactor,1.0f/container->transform().m11()) , MIN(scaleFactor,1.0f/container->transform().m22()) );
-	container->scale( scaleFactor , scaleFactor );
-
+    //container->scale( scaleFactor , scaleFactor );
+    container->setTransform(QTransform::fromScale(scaleFactor, scaleFactor), true);
 	//Item is only selectable, not movable. (moved by drag&drop, other mechanism)
 	container->setFlags( QGraphicsItem::ItemIsSelectable );
 

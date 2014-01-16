@@ -1010,7 +1010,7 @@ void QFaustItem::init()
 
 	connect( this, SIGNAL( descriptiveNameChanged() ), this , SLOT( updateNameLabel() ) );
 
-	setAcceptsHoverEvents(true);
+    setAcceptHoverEvents(true);
 //	mPenBrushSwitcher.addFlag(IDLE_FLAG,		0, PenBrush( QPen(QColor(FAUST_ITEM_BASE_RGB,50) , 3) ,		QBrush(QColor(FAUST_ITEM_BASE_RGB,50)) ) );
 //	mPenBrushSwitcher.addFlag(HIGHLIGHTED_FLAG, 1, PenBrush( QPen(QColor(FAUST_ITEM_BASE_RGB,100) , 3) ,	QBrush(QColor(FAUST_ITEM_BASE_RGB,100)) ) );
 //	mPenBrushSwitcher.addFlag(SELECTED_FLAG,	2, PenBrush( QPen(QColor(FAUST_ITEM_BASE_RGB,255) , 3) ,	QBrush(QColor(FAUST_ITEM_BASE_RGB,100)) ) );
@@ -1207,8 +1207,9 @@ void QFaustItem::faustUpdateGeometry( const QRectF& newGeometry )
 		float minRatio = qMin( heightRatio , widthRatio );
 
 //		qDebug() << "QFaustItem::faustUpdateGeometry : transform().m11() = "<< mSVGItem->transform().m11();
-		mSVGItem->scale( minRatio , minRatio );
-		itemGeometry = mapFromItem( mSVGItem , mSVGItem->boundingRect() ).boundingRect();
+        //mSVGItem->scale( minRatio , minRatio );
+        mSVGItem->setTransform(QTransform::fromScale(minRatio, minRatio), true);
+        itemGeometry = mapFromItem( mSVGItem , mSVGItem->boundingRect() ).boundingRect();
 		float emptyWidth = rect().width() - itemGeometry.width();
 		float emptyHeight = rect().height() - itemGeometry.height();
 		mSVGItem->setPos( emptyWidth/2.0f , emptyHeight/2.0f );

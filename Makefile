@@ -18,8 +18,8 @@ else
 endif
 
 
-all : Makefile.qt4
-	make -f Makefile.qt4
+all : Makefile_QT
+	make -f Makefile_QT
 
 install : install-$(system)
 uninstall : uninstall-$(system)
@@ -66,15 +66,15 @@ clonedist :
 distribution :
 	git archive -o $(DISTRIB).zip HEAD
 
-clean : Makefile.qt4
-	make -f Makefile.qt4 clean
+clean : Makefile_QT
+	make -f Makefile_QT clean
 	rm -f FaustWorks.pro.user
 	rm -rf FaustWorks.app
 	rm -f $(DISTRIB).dmg
 	rm -f $(DISTRIB).zip
 
-Makefile.qt4: 
-	$(qm) $(SPEC) -o Makefile.qt4
+Makefile_QT: 
+	$(qm) $(SPEC) -o Makefile_QT
 
 	
 	

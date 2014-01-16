@@ -3,10 +3,10 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = 
+TARGET = FaustWorks
 DEPENDPATH += . Forms Resources
 INCLUDEPATH += .
-QT += xml svg
+QT += xml svg widgets printsupport
 RC_FILE = Resources/FaustWorks.rc
 ICON = Resources/FaustWorks.icns
 # Input

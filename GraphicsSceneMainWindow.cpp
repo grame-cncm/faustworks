@@ -463,12 +463,14 @@ void GraphicsSceneMainWindow::changeFontSize( float newFontPointSize )
 	mLanguageTextEdit->setFontPointSize( newFontPointSize );
     QSettings("grame.fr", "FaustWorks").setValue( FONT_SIZE_SETTING , mLanguageTextEdit->fontPointSize() );
 	reloadTextEdits();
+	qDebug() << "BIZZZZZ" ;
 }
 
 //-------------------------------------------------------------------------
 void GraphicsSceneMainWindow::sceneSelectionChanged()
 {
-    statusBar()->showMessage(tr("%n item(s) selected", "", selectedLanguageItems().size()).arg(selectedLanguageItems().size()));
+    //statusBar()->showMessage(tr("%n item(s) selected", "", selectedLanguageItems().size()).arg(selectedLanguageItems().size()));
+    statusBar()->showMessage(QString("%1 item(s) selected").arg(selectedLanguageItems().size()));
 	updateWindowState();
 }
 
@@ -1754,7 +1756,10 @@ bool GraphicsSceneMainWindow::loadSceneFile(const QString& fileName)
 				float sceneHeight	= QVariant( e.attribute( DOM_SCENE_HEIGHT, "" ) ).toDouble();
 				centerX				= QVariant( e.attribute( DOM_VIEW_X, "" ) ).toDouble();
 				centerY				= QVariant( e.attribute( DOM_VIEW_Y, "" ) ).toDouble();
-				float zoom			= QVariant( e.attribute( DOM_VIEW_ZOOM, "" ) ).toDouble();
+				float zoom			= QVariant( e.attribute( DOM_VIEW_ZOOM, "1.0" ) ).toDouble();
+				
+				if (zoom <= 0) zoom = 1;
+
 				sceneRect.setX(sceneX);
 				sceneRect.setY(sceneY);
 				sceneRect.setWidth(sceneWidth);

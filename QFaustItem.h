@@ -104,7 +104,7 @@ class QFaustItem : public QLanguageItem
         virtual QMenu * buildContextMenu();
         void mouseDoubleClickEvent( QGraphicsSceneMouseEvent *  );
 	
-		void connectNotify ( const char * signal );
+		void connectNotify (const QMetaMethod &signal);
 	
 		bool generateSVG();
 		bool generateCPP();

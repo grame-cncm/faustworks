@@ -426,7 +426,7 @@ void FaustMainWindow::readSettings()
 	//Update changed values
 	
 	//Update text edits.
-	changeFontSize( settings.value( FONT_SIZE_SETTING ).toDouble() );
+	changeFontSize(settings.value(FONT_SIZE_SETTING, DEFAULT_FONT_SIZE).toDouble() );
 	reloadTextEdits();
 }
 

@@ -591,6 +591,8 @@ bool QFaustItem::generateBinary()
     mItemBuildCommand = interpretCommand( mBuildCommand );
 
     qDebug() << "mItemBuildCommand[2] = " << mItemBuildCommand;
+
+	mBuildProcess->setWorkingDirectory(mWorkingDirectory);
 	
 	mBuildProcess->start( mItemBuildCommand );
 

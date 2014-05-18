@@ -330,15 +330,15 @@ void QFaustItem::mouseDoubleClickEvent( QGraphicsSceneMouseEvent * )
 }
 
 //------------------------------------------------------------
-void QFaustItem::connectNotify ( const char * signal )
+void QFaustItem::connectNotify (const QMetaMethod &signal)
 {
 	// It is possible that the launchScriptError signal is emitted
 	// before that the connection is made, so we re-emit it if necessary.
-	if (QLatin1String(signal) == SIGNAL(launchScriptError(const QString&)))
-	{
-		if ( mBuildError )
-			Q_EMIT launchScriptError( mItemBuildCommand );
-	}
+// 	if (signal == SIGNAL(launchScriptError(const QString&)))
+// 	{
+// 		if ( mBuildError )
+// 			Q_EMIT launchScriptError( mItemBuildCommand );
+// 	}
 }
 
 /**

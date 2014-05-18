@@ -580,7 +580,7 @@ void LanguageTextEdit::dragEnterEvent(QDragEnterEvent* event)
 }
 
 //------------------------------------------------------------------------------------------------------------------------
-void LanguageTextEdit::dragMoveEvent(QDragEnterEvent* event)
+void LanguageTextEdit::dragMoveEvent(QDragMoveEvent* event)
 {
 	if (		
 		(

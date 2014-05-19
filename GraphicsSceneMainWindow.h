@@ -199,6 +199,7 @@ public:
 	static const GraphicsSceneMainWindowSettings& applicationSettings();
 
 protected Q_SLOTS:
+    void aboutApplication();
     void addItem();
     void addItemFromFile();
 	void removeSelectedItems();

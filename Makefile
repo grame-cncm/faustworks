@@ -4,7 +4,7 @@ qm := $(if $(qm4),$(qm4),qmake)
 
 
 
-VERSION="0.4"
+VERSION="0.5"
 DISTRIB=FaustWorks-$(VERSION)
 TMPDIR=$(DISTRIB)-Distribution
 

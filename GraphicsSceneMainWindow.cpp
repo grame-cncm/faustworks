@@ -1211,10 +1211,10 @@ void GraphicsSceneMainWindow::createActions()
 	if ( !mSettings.mDesactiveUIElements.contains( EXIT_ACT ) )
 		connect(mExitAct, SIGNAL(triggered()), this, SLOT(close()));
 
-    mAboutQtAct = new QAction(tr("About &Qt"), this);
-    mAboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
+    mAboutQtAct = new QAction(tr("About &FaustWorks"), this);
+    mAboutQtAct->setStatusTip(tr("Shows FaustWorks' About box"));
 	if ( !mSettings.mDesactiveUIElements.contains( ABOUT_QT_ACT ) )
-		connect(mAboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+		connect(mAboutQtAct, SIGNAL(triggered()), this, SLOT(aboutApplication()));
 
 	mZoomInAct = new QAction(QIcon(RSC_DIR + QString("zoomIn.png")), tr("Zoom &In") , this);
 	mZoomInAct->setShortcut( QKeySequence::ZoomIn );
@@ -2585,6 +2585,12 @@ void GraphicsSceneMainWindow::dropEvent(QDropEvent* event)
 }
 
 //-------------------------------------------------------------------------
+void GraphicsSceneMainWindow::aboutApplication()
+{
+    QMessageBox::about(this, tr("About FaustWorks"), tr("FaustWorks %1 : an IDE for <a href=\"http://faust.grame.fr\">FAUST</a><br><br>Copyright 2009-2014 GRAME").arg(APP_VERSION));
+}
+
+//-------------------------------------------------------------------------
 QGraphicsPixmapItem * buildPixmapItem( const QString& fileName )
 {
 	QGraphicsPixmapItem * i = new QGraphicsPixmapItem( QPixmap( fileName ) );
@@ -2611,3 +2617,4 @@ QItemResizer * GraphicsSceneMainWindow::plugResizer( QLanguageItem * itemContain
 	
 	return itemResizer;
 }
+

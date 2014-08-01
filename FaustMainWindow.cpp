@@ -80,7 +80,9 @@ enum {  COMBINATION_SEQ1=1, COMBINATION_SEQ2,
 FaustMainWindow::FaustMainWindow()
 	:	GraphicsSceneMainWindow( new LanguageGraphicsView() , new QFaustItemFactory() )
 {
-    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
+    QSettings settings("grame.fr", "FaustWorks");
+
+	setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
     setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
 
 	mCPPTextEdit = new QTextEdit("" , this);
@@ -116,10 +118,13 @@ FaustMainWindow::FaustMainWindow()
 	init();
 	
     new FaustHighlighter( mLanguageTextEdit->document() ); // note : we need it, but we don't have to store the highlighter
+	mLanguageTextEdit->setAcceptRichText( false );
     mLanguageTextEdit->selectAll();
     mLanguageTextEdit->setFontFamily( FONT_FAMILY );
 
 	new CPPHighlighter( mCPPTextEdit->document() );
+
+	changeFontSize(settings.value(FONT_SIZE_SETTING, DEFAULT_FONT_SIZE).toDouble());
 
 	// Create a QPaletteItem for FaustItems (id=FAUST_ITEM_PALETTE), radius 100, no parent (=independant).
 	QPaletteItem * paletteItem = new QPaletteItem( FAUST_ITEM_PALETTE , 150 , 0 );
@@ -421,7 +426,7 @@ void FaustMainWindow::readSettings()
 	//Update changed values
 	
 	//Update text edits.
-	mCPPTextEdit->setFontPointSize(	settings.value( FONT_SIZE_SETTING ).toDouble() );
+	changeFontSize(settings.value(FONT_SIZE_SETTING, DEFAULT_FONT_SIZE).toDouble() );
 	reloadTextEdits();
 }
 
@@ -592,6 +597,10 @@ void FaustMainWindow::updateWindowState()
 //-----------------------------------------------------------------------
 void FaustMainWindow::changeFontSize( float newFontPointSize )
 {
+	// Make sure fontsize is appropriate before changing it
+	if (newFontPointSize < MIN_FONT_SIZE) newFontPointSize = MIN_FONT_SIZE;
+	if (newFontPointSize > MAX_FONT_SIZE) newFontPointSize = MAX_FONT_SIZE;
+
 	mCPPTextEdit->setFontPointSize( newFontPointSize );
 	mCPPTextEdit->setTabStopWidth( QFontMetrics(mCPPTextEdit->currentFont()).width ( "a" ) * TAB_SPACE );
 
@@ -599,7 +608,11 @@ void FaustMainWindow::changeFontSize( float newFontPointSize )
 	// that hasn't to be called by GraphicsSceneMainWindow.
 	mLanguageTextEdit->setFontPointSize( newFontPointSize );
 	mLanguageTextEdit->setTabStopWidth( QFontMetrics(mLanguageTextEdit->currentFont()).width ( "a" ) * TAB_SPACE );	
-	GraphicsSceneMainWindow::changeFontSize(newFontPointSize);
+	//GraphicsSceneMainWindow::changeFontSize(newFontPointSize);
+	//mLanguageTextEdit->setFontPointSize( newFontPointSize );
+    QSettings("grame.fr", "FaustWorks").setValue( FONT_SIZE_SETTING , mLanguageTextEdit->fontPointSize() );
+	reloadTextEdits();
+
 }
 
 //-------------------------------------------------------------------------

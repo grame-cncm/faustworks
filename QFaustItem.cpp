@@ -330,15 +330,15 @@ void QFaustItem::mouseDoubleClickEvent( QGraphicsSceneMouseEvent * )
 }
 
 //------------------------------------------------------------
-void QFaustItem::connectNotify ( const char * signal )
+void QFaustItem::connectNotify (const QMetaMethod &signal)
 {
 	// It is possible that the launchScriptError signal is emitted
 	// before that the connection is made, so we re-emit it if necessary.
-	if (QLatin1String(signal) == SIGNAL(launchScriptError(const QString&)))
-	{
-		if ( mBuildError )
-			Q_EMIT launchScriptError( mItemBuildCommand );
-	}
+// 	if (signal == SIGNAL(launchScriptError(const QString&)))
+// 	{
+// 		if ( mBuildError )
+// 			Q_EMIT launchScriptError( mItemBuildCommand );
+// 	}
 }
 
 /**
@@ -591,6 +591,8 @@ bool QFaustItem::generateBinary()
     mItemBuildCommand = interpretCommand( mBuildCommand );
 
     qDebug() << "mItemBuildCommand[2] = " << mItemBuildCommand;
+
+	mBuildProcess->setWorkingDirectory(mWorkingDirectory);
 	
 	mBuildProcess->start( mItemBuildCommand );
 
@@ -1010,7 +1012,7 @@ void QFaustItem::init()
 
 	connect( this, SIGNAL( descriptiveNameChanged() ), this , SLOT( updateNameLabel() ) );
 
-	setAcceptsHoverEvents(true);
+    setAcceptHoverEvents(true);
 //	mPenBrushSwitcher.addFlag(IDLE_FLAG,		0, PenBrush( QPen(QColor(FAUST_ITEM_BASE_RGB,50) , 3) ,		QBrush(QColor(FAUST_ITEM_BASE_RGB,50)) ) );
 //	mPenBrushSwitcher.addFlag(HIGHLIGHTED_FLAG, 1, PenBrush( QPen(QColor(FAUST_ITEM_BASE_RGB,100) , 3) ,	QBrush(QColor(FAUST_ITEM_BASE_RGB,100)) ) );
 //	mPenBrushSwitcher.addFlag(SELECTED_FLAG,	2, PenBrush( QPen(QColor(FAUST_ITEM_BASE_RGB,255) , 3) ,	QBrush(QColor(FAUST_ITEM_BASE_RGB,100)) ) );
@@ -1207,8 +1209,9 @@ void QFaustItem::faustUpdateGeometry( const QRectF& newGeometry )
 		float minRatio = qMin( heightRatio , widthRatio );
 
 //		qDebug() << "QFaustItem::faustUpdateGeometry : transform().m11() = "<< mSVGItem->transform().m11();
-		mSVGItem->scale( minRatio , minRatio );
-		itemGeometry = mapFromItem( mSVGItem , mSVGItem->boundingRect() ).boundingRect();
+        //mSVGItem->scale( minRatio , minRatio );
+        mSVGItem->setTransform(QTransform::fromScale(minRatio, minRatio), true);
+        itemGeometry = mapFromItem( mSVGItem , mSVGItem->boundingRect() ).boundingRect();
 		float emptyWidth = rect().width() - itemGeometry.width();
 		float emptyHeight = rect().height() - itemGeometry.height();
 		mSVGItem->setPos( emptyWidth/2.0f , emptyHeight/2.0f );

@@ -158,7 +158,7 @@ class LanguageTextEdit : public QTextEdit
 		void wheelEvent( QWheelEvent * e );
 		void focusOutEvent( QFocusEvent * event );
 		void dragEnterEvent(QDragEnterEvent* event);
-		void dragMoveEvent(QDragEnterEvent* event);
+		void dragMoveEvent(QDragMoveEvent* event);
 		void dropEvent(QDropEvent* event);
 		
 		GraphicsSceneMainWindow * mMainWindow;

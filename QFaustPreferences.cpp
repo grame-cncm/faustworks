@@ -124,11 +124,12 @@ void QFaustPreferences::applyConfiguration( const QString& settingKey , const QS
     QSettings settings("grame.fr", "FaustWorks");
 	
 	settings.remove( settingKey );
-	QList<QWidget*> targetWidgets = qFindChildren<QWidget*>( box , widgetName );
-	for ( int i = 0 ; i < targetWidgets.size() ; i++)
+//  QList<QWidget*> targetWidgets = qFindChildren<QWidget*>( box , widgetName );
+    QList<QWidget*> targetWidgets = box->findChildren<QWidget*>( widgetName );
+    for ( int i = 0 ; i < targetWidgets.size() ; i++)
 	{
-		QList<QLineEdit*> nameEdit = qFindChildren<QLineEdit*>( targetWidgets[i] , nameEditName );
-		QList<QLineEdit*> commandEdit = qFindChildren<QLineEdit*>( targetWidgets[i] , commandEditName );
+        QList<QLineEdit*> nameEdit = targetWidgets[i]->findChildren<QLineEdit*>( nameEditName );
+        QList<QLineEdit*> commandEdit =  targetWidgets[i]->findChildren<QLineEdit*>(commandEditName );
 		assert( nameEdit.size() == 1 );
 		assert( commandEdit.size() == 1 );
 		settings.setValue(settingKey + "/" + nameEdit[0]->text() , commandEdit[0]->text() );
@@ -159,8 +160,9 @@ void QFaustPreferences::updateConfigurationWidgets(
     QSettings settings("grame.fr", "FaustWorks");
 
 	//Clear targets
-	QList<QWidget*> targetWidgets = qFindChildren<QWidget*>( parent , widgetName );
-	for ( int i = 0 ; i < targetWidgets.size() ; i++)
+//  QList<QWidget*> targetWidgets = qFindChildren<QWidget*>( parent , widgetName );
+    QList<QWidget*> targetWidgets =  parent->findChildren<QWidget*>(widgetName );
+    for ( int i = 0 ; i < targetWidgets.size() ; i++)
 	{
 		delete targetWidgets[i];
 	}
